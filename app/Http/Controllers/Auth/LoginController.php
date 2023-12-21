@@ -71,13 +71,16 @@ class LoginController extends Controller
 
       //uid Session
       $loginuid = $signInResult->firebaseUserId();
-      // Session::put('uid', $loginuid);
+      Session::put('uid', $loginuid);
 
       Auth::login($user);
-      // $userDetails = app('firebase.auth')->getUser($loginuid);
 
-      // Adding user data
-      return redirect($this->redirectPath());
+      $userDetails = app('firebase.auth')->getUserByEmail($request['email']);
+      // dd($userDetails);
+      if (isset($userDetails->customClaims['admin']) && $userDetails->customClaims['admin'] ) {
+        return redirect()->route('admin.dashboard');
+      } 
+      return redirect()->route('verify');
     } catch (FirebaseException $e) {
       throw ValidationException::withMessages([$this->username() => [trans('auth.failed')],]);
     }

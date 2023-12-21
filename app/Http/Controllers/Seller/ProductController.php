@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         // $products = Product::all();
 
-        return view ('admin.products.index');/**, compact('products'));*/
+        return view ('seller.products.index');/**, compact('products'));*/
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
         // $types = Product::types();
         // $configurable_attributes = $this->_getConfigurableAttributes();
         
-        return view('admin.products.create');/**, compact('categories', 'types', 'configurable_attributes'));*/
+        return view('seller.products.create');/**, compact('categories', 'types', 'configurable_attributes'));*/
     }
 
     /**

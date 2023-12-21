@@ -25,7 +25,6 @@ class ProductController extends Controller
      */
     public function productDetails(Request $request)
     {
-
         $idproduct = $request->route('id');
 
         $productRef = app('firebase.firestore')->database()->collection('product');

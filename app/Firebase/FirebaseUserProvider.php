@@ -26,7 +26,7 @@ class FirebaseUserProvider implements UserProvider
       $user = new User([
          'uid' => $firebaseUser->uid,
          'email' => $firebaseUser->email,
-         'name' => $firebaseUser->name
+         'name' => $firebaseUser->displayName
       ]);
       return $user;
    }

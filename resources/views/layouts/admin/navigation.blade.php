@@ -4,7 +4,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
             {{-- {{ route('admin.profile.show') }} --}}
-            <a href="" class="d-block">Welcome, {{ $user->data()['name'] }}</a>
+            <a href="" class="d-block">Welcome, ADMIN</a>
         </div>
     </div>
 
@@ -13,10 +13,10 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
             <li class="nav-item">
-                <a href="{{ route('seller.dashboard') }}" class="nav-link">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
-                        {{ __('Thống kế') }}
+                        {{ __('Thống kê') }}
                     </p>
                 </a>
             </li>
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('seller.products.index') }}" class="nav-link">
+                        <a href="" class="nav-link">
                             <i class="fa fa-plus nav-icon"></i>
                             <p>Sản Phẩm</p>
                         </a>

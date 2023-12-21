@@ -76,20 +76,21 @@ class RegisterController extends Controller
             'email' => $request->input('email'),
             'emailVerified' => false,
             'password' => $request->input('password'),
-            'name' => $request->input('name')
+            'displayName' => $request->input('name'),
+            'phoneNumber' => $request->input('phone'),
          ];
          $createdUser = $this->auth->createUser($userProperties);
          $detailRef = app('firebase.firestore')->database()->collection('user')->Document($createdUser->uid);
-      $detailRef->set([
-        'name' => $request->input('name'),
-        'email' => $request->input('email'),
-        'password' => bcrypt($request->input('password')),
-        'mobileNo' => $request->input('phone'),
-        'seller' => false,
-      ]);
+         $detailRef->set([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'mobileNo' => $request->input('phone'),
+            'seller' => false,
+         ]);
          return redirect()->route('login');
       } catch (FirebaseException $e) {
-         Session::flash('error', $e->getMessage());
+         $error = str_replace('_', ' ', $e->getMessage());
+         Session::flash('error', $error);
          return back()->withInput();
       }
    }

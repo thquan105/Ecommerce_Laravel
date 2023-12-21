@@ -51,6 +51,30 @@ class ProfileController extends Controller
     //
   }
 
+  public function add_email(Request $request)
+  {
+    $auth = app('firebase.auth');
+    // dd($auth->getUser(Session::get('uid')));
+    try {
+      $request->validate([
+        'email' => 'required|string|email|max:255',
+      ]);
+      $properties = [
+        'email' => $request->email
+      ];
+      $updatedUser = $auth->updateUser(Session::get('uid'), $properties);
+      $user = app('firebase.firestore')->database()->collection('user')->Document(Session::get('uid'));
+      $user->update([
+        ['path' => 'email', 'value' => $request->email],
+      ]);
+      
+      return redirect()->route('verify');
+    } catch (\Exception $e) {
+      Session::flash('error', $e->getMessage());
+      return back()->withInput();
+    }
+  }
+
   /**
    * Display the specified resource.
    *
@@ -87,33 +111,45 @@ class ProfileController extends Controller
 
     $user = $auth->getUser($id);
     try {
-      if ($request->new_password == '' && $request->new_confirm_password == '') {
-        $request->validate([
-          'displayName' => 'required|min:3|max:12',
-          'email' => 'required',
-        ]);
-        $properties = [
-          'displayName' => $request->displayName,
-          'email' => $request->email,
-        ];
-        $updatedUser = $auth->updateUser($id, $properties);
-        if ($user->email != $request->email) {
-          $auth->updateUser($id, ['emailVerified' => false]);
-        }
-        Session::flash('message', 'Profile Updated');
-        return back()->withInput();
-      } else {
-        $request->validate([
-          'new_password' => 'required|max:18|min:8',
-          'new_confirm_password' => 'same:new_password',
-        ]);
-        $updatedUser = $auth->changeUserPassword($id, $request->new_password);
-        Session::flash('message', 'Password Updated');
-        return back()->withInput();
+      $request->validate([
+        'name' => 'required|min:3|max:255',
+        'required', 'string', 'email', 'max:255',
+        'phone' => 'required|numeric',
+      ]);
+      $properties = [
+        'displayName' => $request->name,
+        'email' => $request->email,
+        'phoneNumber' => $request->phone,
+      ];
+      $updatedUser = $auth->updateUser($id, $properties);
+      if ($user->email != $request->email) {
+        $auth->updateUser($id, ['emailVerified' => false]);
       }
-      return $input;
+      $user = app('firebase.firestore')->database()->collection('user')->Document($id);
+      $user->update([
+        ['path' => 'name', 'value' => $request->name],
+        ['path' => 'email', 'value' => $request->email],
+        ['path' => 'mobileNo', 'value' => $request->phone],
+        ['path' => 'postCode', 'value' => $request->postcode],
+      ]);
+      Session::flash('message', 'Profile Updated');
+      return back()->withInput();
     } catch (\Exception $e) {
       Session::flash('error', $e->getMessage());
+      return back()->withInput();
+    }
+  }
+
+  public function changePassword()
+  {
+    try {
+      $email = app('firebase.auth')->getUser(Session::get('uid'))->email;
+      $link = app('firebase.auth')->sendPasswordResetLink($email);
+      Session::flash('message', 'An change password email has been sent. Please check your inbox.');
+      return back()->withInput();
+    } catch (FirebaseException $e) {
+      $error = str_replace('_', ' ', $e->getMessage());
+      Session::flash('error', $error);
       return back()->withInput();
     }
   }
@@ -127,17 +163,18 @@ class ProfileController extends Controller
   public function destroy($id)
   {
     $updatedUser = app('firebase.auth')->disableUser($id);
+    // $user = app('firebase.firestore')->database()->collection('user')->Document($id)->delete();
     Session::flush();
     return redirect('/login');
   }
-  
+
   public function makeSeller()
   {
     $uid = Session::get('uid');
     $user = app('firebase.firestore')->database()->collection('user')->Document($uid);
     $user->update([
       ['path' => 'seller', 'value' => true],
-  ]);
+    ]);
     return redirect()->route('home');
   }
 }

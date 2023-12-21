@@ -13,14 +13,14 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = [
-            [
-                'name' => 'Admin',
-                'email' => 'admin@admin.com',
-                'password' => bcrypt('123'),
-                'is_admin' => true,
-            ]
+        $userProperties = [
+            'displayName' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => 'password',
+            'emailVerified' => true,
         ];
-        User::insert($admin);
+        app('firebase.auth')->createUser($userProperties);
+        $user = app('firebase.auth')->getUserByEmail('admin@admin.com');
+        app('firebase.auth')->setCustomUserClaims($user->uid, ['admin' => true]);
     }
 }

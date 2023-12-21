@@ -18,15 +18,49 @@
     </div>
 
     <div class="container-xl px-4 mt-4">
+        @if (Session::has('message'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{ Session::get('message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $error }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endforeach
+        @endif
+
+        @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ Session::get('error') }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        @endif
+
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ Session::get('success') }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        @endif
         <div class="row">
-            <div class="col-xl-4">
+            <div class="col-xl-3">
                 <!-- Profile picture card-->
                 <div class="card mb-4 mb-xl-0">
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="{{ $user->data()['photo'] ?? '' }}"
-                            alt="">
+                        <img class="img-account-profile rounded-circle mb-2"
+                            style="width: 150px; height: 150px; object-fit: fill;"
+                            src="{{ $user->data()['photo'] ?? asset('frontend/images/avatar-01.jpg') }}" alt="">
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Profile picture upload button-->
@@ -34,33 +68,7 @@
                     </div>
                 </div>
             </div>
-            @if (Session::has('message'))
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    {{ Session::get('message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ $error }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endforeach
-            @endif
-
-            @if (Session::has('error'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    {{ Session::get('error') }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
-            @endif
-            <div class="col-xl-8">
+            <div class="col-xl-9">
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
@@ -83,8 +91,8 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="first_name">First Name</label>
-                                    <input class="form-control" type="text" name="first_name" id="first_name"
-                                        value="{{ $user->data()['name'] ?? 'First Name' }}">
+                                    <input class="form-control" type="text" name="first_name" id="first_name" placeholder="First Name"
+                                        value="{{ $user->data()['firstName'] ?? '' }}">
                                     @error('first_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -92,8 +100,8 @@
                                 <!-- Form Group (last name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="last_name">Last Name</label>
-                                    <input class="form-control" type="text" name="last_name" id="last_name"
-                                        value="{{ $user->data()['name'] ?? 'Last Name' }}">
+                                    <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Last Name"
+                                        value="{{ $user->data()['lastName'] ?? '' }}">
                                     @error('last_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -101,12 +109,32 @@
                             </div>
                             <!-- Form Group (email address)-->
                             <div class="mb-3">
-                                <label class="small mb-1" for="email">Email address</label>
-                                <input class="form-control" type="text" name="email" id="email"
-                                    value="{{ $user->data()['email'] ?? 'Example@email.com' }}">
-                                @error('email')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                <label class="small mb-1" for="email">Email address
+                                    <br> (Update your account's profile information and email address. When You change your email ,you need to verify your email else the
+                                    account will be blocked)</label>
+                                <div class="row mb-3">
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" name="email" id="email"
+                                            value="{{ $user->data()['email'] ?? 'Example@email.com' }}">
+                                        @error('email')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-2">
+                                        @if (app('firebase.auth')->getUser($uid)->emailVerified)
+                                            <label class="btn btn-success">
+                                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                                Verify
+                                            </label>
+                                        @else
+                                            <a class="btn btn-link" href="{{ route('verify') }}">
+                                                <button class="btn btn-danger" type="button">
+                                                    <i class="fa fa-check-circle" aria-hidden="false"></i>
+                                                    No Verify
+                                                </button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <!-- Form Row-->
                             <!-- Form Row        -->
@@ -147,8 +175,8 @@
                                 <div class="col-md-6">
                                     <!-- Form Group (phone number)-->
                                     <label class="small mb-1" for="phone">Phone <span class="required">*</span></label>
-                                    <input class="form-control" type="phone" name="phone" id="phone"
-                                        value="{{ $user->data()['phone'] ?? 'Phone' }}">
+                                    <input class="form-control" type="phone" name="phone" id="phone" placeholder="+84 xxx xxx xxx"
+                                        value="{{ $user->data()['mobileNo'] ?? '' }}">
                                     @error('phone')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -156,8 +184,8 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="postcode">Postcode / Zip <span
                                             class="required">*</span></label>
-                                    <input class="form-control" type="number" name="postcode" id="postcode"
-                                        value="{{ $user->data()['postcode'] ?? 'Postcode' }}">
+                                    <input class="form-control" type="number" name="postcode" id="postcode" placeholder="Postcode"
+                                        value="{{ $user->data()['postCode'] ?? '' }}">
                                     @error('postcode')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -165,14 +193,31 @@
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit">Save changes</button>
-                            <a class="btn btn-link" href="{{ route('password.change') }}">
+                            <a class="btn btn-link"
+                                onclick="event.preventDefault();
+                                                    document.getElementById('change-pass').submit();">
                                 <button class="btn btn-info" type="button">Change Password</button>
                             </a>
+                            <a class="btn btn-link"
+                                onclick="event.preventDefault();
+                                                    document.getElementById('destroy-acc').submit();">
+                                <button class="btn btn-danger" type="button">Delete Profile</button>
+                            </a>
+
                             @if (!$user->data()['seller'])
                                 <a class="btn btn-link" href="/home/iamseller">
                                     <button class="btn btn-success" type="button">Make Seller</button>
                                 </a>
                             @endif
+                        </form>
+                        <form id="change-pass" action="{{ route('password.change') }}" method="POST"
+                            onsubmit="return confirm('Are you sure?')">
+                            @csrf
+                        </form>
+                        <form id="destroy-acc" action="{{ route('profile.destroy', $uid) }}" method="POST"
+                            onsubmit="return confirm('Are you sure?')">
+                            @csrf
+                            @method('DELETE')
                         </form>
                     </div>
                 </div>

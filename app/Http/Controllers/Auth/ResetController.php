@@ -33,6 +33,9 @@ class ResetController extends Controller
     } else {
       try {
         $email = app('firebase.auth')->getUser($uid)->email;
+        if ($email == null) {
+          return view("auth.passwords.add-email")->with('error', 'Email not found. Please add your email.');
+        }
         $link = app('firebase.auth')->sendEmailVerificationLink($email);
         Session::flash('resend', 'Notify');
       } catch (FirebaseException $e) {
@@ -91,8 +94,10 @@ class ResetController extends Controller
     try {
       $uid = Session::get('uid');
       $email = app('firebase.auth')->getUser($uid)->email;
+      if ($email == null) {
+        return view("auth.passwords.add-email")->with('error', 'Email not found. Please add your email.');
+      }
       $link = app('firebase.auth')->sendEmailVerificationLink($email);
-
       Session::flash('resend', 'Notify');
       return back()->withInput();
     } catch (FirebaseException $e) {

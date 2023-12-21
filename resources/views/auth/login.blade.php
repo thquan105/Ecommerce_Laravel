@@ -104,13 +104,13 @@
     <script>
         // Initialize Firebase
         var firebaseConfig = {
-            apiKey: "AIzaSyD20fVX3gIrGIIrFFKIz-GINoIxPtub97c",
-            authDomain: "ecommerceapp-a636b.firebaseapp.com",
-            projectId: "ecommerceapp-a636b",
-            storageBucket: "ecommerceapp-a636b.appspot.com",
-            messagingSenderId: "94539330946",
-            appId: "1:94539330946:web:c1059b6c4fe58644cf4b9b",
-            measurementId: "G-C9B0HBMS1F"
+            apiKey: "{{ config('services.firebase.api_key') }}",
+            authDomain: "{{ config('services.firebase.auth_domain') }}",
+            projectId: "{{ config('services.firebase.project_id') }}",
+            storageBucket: "{{ config('services.firebase.storage_bucket') }}",
+            messagingSenderId: "{{ config('services.firebase.messaging_sender_id') }}",
+            appId: "{{ config('services.firebase.app_id') }}",
+            measurementId: "{{ config('services.firebase.measurement_id') }}",
         };
         firebase.initializeApp(firebaseConfig);
         var facebookProvider = new firebase.auth.FacebookAuthProvider();

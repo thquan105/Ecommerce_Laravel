@@ -30,4 +30,14 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+
+    'firebase' => [
+        'api_key' => env('API_KEY'), // Only used from JS integration
+        'auth_domain' => env('AUTH_DOMAIN'), // Only used from JS integration
+        'storage_bucket' => env('STORAGE_BUCKET'), // Only used from JS integration
+        'project_id' => env('PROJECT_ID'),
+        'messaging_sender_id' => env('MESSAGING_SENDER_ID'), // Only used from JS integration
+        'app_id' => env('APP_ID'), // Only used from JS integration
+        'measurement_id' => env('MEASUREMENT_ID'), // Only used from JS integration
+    ],
 ];
