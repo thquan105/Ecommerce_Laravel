@@ -19,6 +19,6 @@ class IsAdmin
         if ($user->customClaims['admin'])
             return $next($request);    
         else
-            abort('403', 'You are not a seller');
+            abort('403', 'You are not a Admin');
     }
 }

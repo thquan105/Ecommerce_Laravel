@@ -10,122 +10,43 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-            data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
-                        {{ __('Thống kê') }}
+                        {{ __('Home') }}
                     </p>
                 </a>
             </li>
 
-            {{-- <li class="nav-item">
-                <a href="{{ route('admin.users.index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        {{ __('Users') }}
-                    </p>
-                </a>
-            </li> --}}
-
-            {{-- <li class="nav-item">
-                <a href="{{ route('admin.slides.index') }}" class="nav-link">
+            <li class="nav-item">
+                {{-- {{ route('admin.slides.index') }} --}}
+                <a href="" class="nav-link">
                     <i class="nav-icon fa fa-image"></i>
                     <p>
                         {{ __('Slide') }}
                     </p>
                 </a>
-            </li> --}}
+            </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                {{-- {{ route('admin.users.index') }} --}}
+                <a href="" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
                     <p>
-                        Quản lý Sản Phẩm
-                        <i class="fas fa-angle-left right"></i>
+                        {{ __('Seller') }}
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        {{-- {{ route('seller.categories.index') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Danh mục</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Sản Phẩm</p>
-                        </a>
-                    </li>
-                </ul>
             </li>
+
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                    <i class="fa fa-spinner nav-icon"></i>
                     <p>
-                        Quản lý đơn hàng
-                        <i class="fas fa-angle-left right"></i>
+                        {{ __('Category') }}
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        {{-- {{ route('admin.orders.index') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Order</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.shipments.index') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Pengiriman</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
-                    <p>
-                        Báo cáo
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.revenue') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Keuntungan</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.product') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Produk</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.inventory') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Inventory</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.payment') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Payment</p>
-                        </a>
-                    </li>
-                </ul>
             </li>
         </ul>
     </nav>

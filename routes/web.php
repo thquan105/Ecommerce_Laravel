@@ -84,4 +84,6 @@ Route::group(['middleware' => ['fireauth' ,'user']], function () {
 Route::group(['middleware' => ['isAdmin', 'fireauth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     // Seller
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('{category}/subcategories', \App\Http\Controllers\Admin\SubCategoryController::class);
 });
