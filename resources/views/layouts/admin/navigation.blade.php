@@ -22,20 +22,10 @@
 
             <li class="nav-item">
                 {{-- {{ route('admin.slides.index') }} --}}
-                <a href="" class="nav-link">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fa fa-image"></i>
                     <p>
                         {{ __('Slide') }}
-                    </p>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                {{-- {{ route('admin.users.index') }} --}}
-                <a href="" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        {{ __('Seller') }}
                     </p>
                 </a>
             </li>
@@ -48,6 +38,31 @@
                     </p>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        {{ __('Seller') }}
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.sellers.index') }}" class="nav-link">
+                            <i class="fa fa-hashtag nav-icon"></i>
+                            <p>Danh sách</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.sellers.show') }}" class="nav-link">
+                            <i class="fa fa-user-plus nav-icon"></i>
+                            <p>Phê Duyệt</p>
+                        </a>
+                    </li>    
+                </ul>
+            </li>
+
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

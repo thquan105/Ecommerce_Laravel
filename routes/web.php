@@ -69,8 +69,9 @@ Route::post('profile/add-email', [App\Http\Controllers\Auth\ProfileController::c
 Route::group(['middleware' => ['fireauth' ,'user']], function () {
     // User login
     Route::resource('profile', App\Http\Controllers\Auth\ProfileController::class);
-    Route::get('/home/iamseller', [App\Http\Controllers\Auth\ProfileController::class, 'makeSeller']);
+    Route::put('/home/iamseller', [App\Http\Controllers\Auth\ProfileController::class, 'makeSeller'])->name('profile.makeSeller');
     Route::post('password/change', [App\Http\Controllers\Auth\ProfileController::class, 'changePassword'])->name('password.change');
+    Route::post('profile/{profile}', [App\Http\Controllers\Auth\ProfileController::class, 'updateImg'])->name('profile.updateImg');
 
 
 
@@ -86,4 +87,10 @@ Route::group(['middleware' => ['isAdmin', 'fireauth'], 'prefix' => 'admin', 'as'
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('{category}/subcategories', \App\Http\Controllers\Admin\SubCategoryController::class);
+    Route::get('sellers', [App\Http\Controllers\Admin\SellerController::class, 'index'])->name('sellers.index');
+    Route::get('sellers/{id}/disable', [App\Http\Controllers\Admin\SellerController::class, 'disable'])->name('sellers.disable');
+    Route::get('sellers/{id}/enable', [App\Http\Controllers\Admin\SellerController::class, 'enable'])->name('sellers.enable');
+    Route::get('sellers/approve', [App\Http\Controllers\Admin\SellerController::class, 'show'])->name('sellers.show');
+    Route::get('sellers/{id}/deny', [App\Http\Controllers\Admin\SellerController::class, 'deny'])->name('sellers.deny');
+    Route::get('sellers/{id}/accept', [App\Http\Controllers\Admin\SellerController::class, 'accept'])->name('sellers.accept');
 });

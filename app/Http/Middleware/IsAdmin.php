@@ -16,7 +16,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = app('firebase.auth')->getUser($request->session()->get('uid'));
-        if ($user->customClaims['admin'])
+        if (isset($user->customClaims['admin']))
             return $next($request);    
         else
             abort('403', 'You are not a Admin');

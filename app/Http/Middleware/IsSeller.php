@@ -17,7 +17,7 @@ class IsSeller
     public function handle(Request $request, Closure $next): Response
     {
         $user = app('firebase.firestore')->database()->collection('user')->document($request->session()->get('uid'))->snapshot();
-        if ($user->data()['seller'])
+        if (isset($user->data()['seller']) && $user->data()['seller'])
             return $next($request);    
         else
             abort('403', 'You are not a seller');

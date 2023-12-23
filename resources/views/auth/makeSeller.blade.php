@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 
-@section('title', 'Profile')
+@section('title', 'Make Seller')
 
 @section('content')
     <!-- breadcrumb -->
@@ -10,9 +10,12 @@
                 Home
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
-
-            <span class="stext-109 cl4">
+            <a href="{{ route('profile.index') }}" class="stext-109 cl8 hov-cl1 trans-04">
                 Profile
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+            <span class="stext-109 cl4">
+                Make Seller
             </span>
         </div>
     </div>
@@ -25,17 +28,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        @endif
-
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ $error }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endforeach
         @endif
 
         @if (Session::has('error'))
@@ -51,43 +43,20 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-        <div class="row">
-            <div class="col-xl-3">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Profile Picture</div>
-                    <div class="card-body text-center">
-                        <form method="post" action="{{ route('profile.updateImg', $uid) }}" enctype="multipart/form-data">
-                            @csrf
-                            <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2"
-                                style="width: 150px; height: 150px; object-fit: fill;"
-                                src="{{ $user->data()['photo'] ?? asset('frontend/images/avatar-01.jpg') }}" alt="">
-                            <!-- Profile picture help block-->
-                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                            <div class="form-group row border-bottom pb-2 justify-content-center">
-                                <div class="col-sm-10">
-                                    <input type="file" class="form-control" name="path" id="path">
-                                </div>
-                            </div>
-                            <!-- Profile picture upload button-->
-                            <button class="btn btn-primary" type="submit">Upload new image</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-9">
-                <!-- Account details card-->
+        <div class="row justify-content-center">
+            <!-- Account details card-->
+            <div class="col-xl-10">
                 <div class="card mb-4">
-                    <div class="card-header">Account Details</div>
+                    <div class="card-header text-center">
+                        <h3 class="mb-0">Enter Seller Information</h3>
+                    </div>
                     <div class="card-body">
-                        <form action="{{ route('profile.update', $uid) }}" method="post">
+                        <form action="{{ route('profile.makeSeller')}}" method="post">
                             @csrf
                             @method('put')
                             <!-- Form Group (username)-->
                             <div class="mb-3">
-                                <label class="small mb-1" for="name">Username (how your name will appear to other
-                                    users on the site)</label>
+                                <label class="small mb-1" for="name">Username</label>
                                 <input class="form-control" id="name" type="text" name="name"
                                     value="{{ $user->data()['name'] ?? 'User Name' }}">
                                 @error('name')
@@ -95,16 +64,14 @@
                                 @enderror
                             </div>
                             <!-- Form Group (username)-->
-                            @if ($user->data()['seller'])
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="shopName">Shop Name</label>
-                                    <input class="form-control" id="shopName" type="text" name="shopName"
-                                        value="{{ $user->data()['shopName'] ?? '' }}">
-                                    @error('shopName')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            @endif
+                            <div class="mb-3">
+                                <label class="small mb-1" for="shopName">Shop Name</label>
+                                <input class="form-control" id="shopName" type="text" name="shopName"
+                                    value="{{ $user->data()['shopName'] ?? '' }}">
+                                @error('shopName')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
@@ -136,7 +103,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-10">
                                         <input class="form-control" type="text" name="email" id="email"
-                                            value="{{ $user->data()['email'] ?? 'Example@email.com' }}">
+                                            value="{{ $user->data()['email'] ?? '' }}">
                                         @error('email')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -165,40 +132,6 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <!-- Form Row-->
-                            <!-- Form Row        -->
-                            {{-- <div class="row gx-3 mb-3">
-                                <!-- Form Group (organization name)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Province <span class="required">*</span></label>
-                                    <select class="form-control" name="province_id" id="province-id"
-                                        value="{{ auth()->user()->province_id }}">
-                                        <option value="">Select Province</option>
-                                        @foreach ($provinces as $province => $pro)
-                                            <option {{ auth()->user()->province_id == $province ? 'selected' : null }}
-                                                value="{{ $province }}">{{ $pro }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('province_id')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <!-- Form Group (location)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1">City <span class="required">*</span></label>
-                                    <select class="form-control" name="city_id" id="city-id"
-                                        value="{{ auth()->user()->city_id }}">
-                                        <option value="">Select City</option>
-                                        @foreach ($cities as $city => $ty)
-                                            <option {{ auth()->user()->city_id == $city ? 'selected' : null }}
-                                                value="{{ $city }}">{{ $ty }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('city_id')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div> --}}
 
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
@@ -222,41 +155,13 @@
                                 </div>
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" type="submit">Save changes</button>
-                            <a class="btn btn-link" onclick="confirmAndSubmit('change-pass')">
-                                <button class="btn btn-info" type="button">Change Password</button>
-                            </a>
-                            <a class="btn btn-link" onclick="confirmAndSubmit('destroy-acc')">
-                                <button class="btn btn-danger" type="button">Delete Profile</button>
-                            </a>
-
-                            @if (!$user->data()['seller'])
-                                <a class="btn btn-link" href="{{ route('profile.create') }}">
-                                    <button class="btn btn-success" type="button">Make Seller</button>
-                                </a>
-                            @endif
-                        </form>
-                        <form id="change-pass" action="{{ route('password.change') }}" method="POST">
-                            @csrf
-                        </form>
-                        <form id="destroy-acc" action="{{ route('profile.destroy', $uid) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                            <span class="btn col justify-content-center">
+                                <button class="btn btn-info btn-lg" type="submit">Submit</button>
+                            </span>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @push('script-alt')
-        <script>
-            function confirmAndSubmit(formId) {
-                var confirmation = confirm('Are you sure?');
-                if (confirmation) {
-                    document.getElementById(formId).submit();
-                }
-            }
-        </script>
-    @endpush
 @endsection
