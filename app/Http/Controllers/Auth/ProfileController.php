@@ -113,7 +113,7 @@ class ProfileController extends Controller
     try {
       $request->validate([
         'name' => 'required|min:3|max:255',
-        'required', 'string', 'email', 'max:255',
+        'email' => 'required', 'string', 'email', 'max:255',
         'phone' => 'required|numeric',
       ]);
       $properties = [
@@ -128,6 +128,8 @@ class ProfileController extends Controller
       $user = app('firebase.firestore')->database()->collection('user')->Document($id);
       $user->update([
         ['path' => 'name', 'value' => $request->name],
+        ['path' => 'firstName', 'value' => $request->first_name],
+        ['path' => 'lastName', 'value' => $request->last_name],
         ['path' => 'email', 'value' => $request->email],
         ['path' => 'mobileNo', 'value' => $request->phone],
         ['path' => 'postCode', 'value' => $request->postcode],
@@ -162,8 +164,8 @@ class ProfileController extends Controller
    */
   public function destroy($id)
   {
-    $updatedUser = app('firebase.auth')->disableUser($id);
-    // $user = app('firebase.firestore')->database()->collection('user')->Document($id)->delete();
+    $updatedUser = app('firebase.auth')->deleteUser($id);
+    $user = app('firebase.firestore')->database()->collection('user')->Document($id)->delete();
     Session::flush();
     return redirect('/login');
   }

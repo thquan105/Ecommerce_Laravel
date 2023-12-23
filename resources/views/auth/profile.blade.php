@@ -91,8 +91,8 @@
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="first_name">First Name</label>
-                                    <input class="form-control" type="text" name="first_name" id="first_name" placeholder="First Name"
-                                        value="{{ $user->data()['firstName'] ?? '' }}">
+                                    <input class="form-control" type="text" name="first_name" id="first_name"
+                                        placeholder="First Name" value="{{ $user->data()['firstName'] ?? '' }}">
                                     @error('first_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -100,8 +100,8 @@
                                 <!-- Form Group (last name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="last_name">Last Name</label>
-                                    <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Last Name"
-                                        value="{{ $user->data()['lastName'] ?? '' }}">
+                                    <input class="form-control" type="text" name="last_name" id="last_name"
+                                        placeholder="Last Name" value="{{ $user->data()['lastName'] ?? '' }}">
                                     @error('last_name')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -110,7 +110,8 @@
                             <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="email">Email address
-                                    <br> (Update your account's profile information and email address. When You change your email ,you need to verify your email else the
+                                    <br> (Update your account's profile information and email address. When You change your
+                                    email ,you need to verify your email else the
                                     account will be blocked)</label>
                                 <div class="row mb-3">
                                     <div class="col-md-10">
@@ -174,9 +175,10 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <!-- Form Group (phone number)-->
-                                    <label class="small mb-1" for="phone">Phone <span class="required">*</span></label>
-                                    <input class="form-control" type="phone" name="phone" id="phone" placeholder="+84 xxx xxx xxx"
-                                        value="{{ $user->data()['mobileNo'] ?? '' }}">
+                                    <label class="small mb-1" for="phone">Phone <span
+                                            class="required">*</span></label>
+                                    <input class="form-control" type="phone" name="phone" id="phone"
+                                        placeholder="+84 xxx xxx xxx" value="{{ $user->data()['mobileNo'] ?? '' }}">
                                     @error('phone')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -184,8 +186,8 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="postcode">Postcode / Zip <span
                                             class="required">*</span></label>
-                                    <input class="form-control" type="number" name="postcode" id="postcode" placeholder="Postcode"
-                                        value="{{ $user->data()['postCode'] ?? '' }}">
+                                    <input class="form-control" type="number" name="postcode" id="postcode"
+                                        placeholder="Postcode" value="{{ $user->data()['postCode'] ?? '' }}">
                                     @error('postcode')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -193,14 +195,10 @@
                             </div>
                             <!-- Save changes button-->
                             <button class="btn btn-primary" type="submit">Save changes</button>
-                            <a class="btn btn-link"
-                                onclick="event.preventDefault();
-                                                    document.getElementById('change-pass').submit();">
+                            <a class="btn btn-link" onclick="confirmAndSubmit('change-pass')">
                                 <button class="btn btn-info" type="button">Change Password</button>
                             </a>
-                            <a class="btn btn-link"
-                                onclick="event.preventDefault();
-                                                    document.getElementById('destroy-acc').submit();">
+                            <a class="btn btn-link" onclick="confirmAndSubmit('destroy-acc')">
                                 <button class="btn btn-danger" type="button">Delete Profile</button>
                             </a>
 
@@ -210,12 +208,10 @@
                                 </a>
                             @endif
                         </form>
-                        <form id="change-pass" action="{{ route('password.change') }}" method="POST"
-                            onsubmit="return confirm('Are you sure?')">
+                        <form id="change-pass" action="{{ route('password.change') }}" method="POST">
                             @csrf
                         </form>
-                        <form id="destroy-acc" action="{{ route('profile.destroy', $uid) }}" method="POST"
-                            onsubmit="return confirm('Are you sure?')">
+                        <form id="destroy-acc" action="{{ route('profile.destroy', $uid) }}" method="POST">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -224,4 +220,15 @@
             </div>
         </div>
     </div>
+
+    @push('script-alt')
+        <script>
+            function confirmAndSubmit(formId) {
+                var confirmation = confirm('Are you sure?');
+                if (confirmation) {
+                    document.getElementById(formId).submit();
+                }
+            }
+        </script>
+    @endpush
 @endsection
