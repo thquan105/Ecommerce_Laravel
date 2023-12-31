@@ -49,8 +49,7 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
-                        {{-- {{ route('seller.categories.index') }} --}}
-                        <a href="" class="nav-link">
+                        <a href="{{ route('seller.categories.index') }}" class="nav-link">
                             <i class="fa fa-plus nav-icon"></i>
                             <p>Danh mục</p>
                         </a>

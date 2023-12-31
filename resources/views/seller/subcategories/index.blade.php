@@ -9,10 +9,8 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('admin.categories.index') }}" class="btn btn-info shadow-sm float-left mr-5"> <i
-                                    class="fa fa-arrow-left"></i> Back</a>
-                            <h3 class="card-title">SUB CATEGORY</h3>
-                            <a href="{{ route('admin.subcategories.create', $Cate->id()) }}" class="btn btn-success shadow-sm float-right">
+                            <h3 class="card-title">CATEGORY BY SHOP</h3>
+                            <a href="{{ route('seller.categories.create') }}" class="btn btn-success shadow-sm float-right">
                                 <i class="fa fa-plus"></i> Thêm </a>
                         </div>
                         <!-- /.card-header -->
@@ -21,30 +19,33 @@
                                 <table id="data-table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Danh mục</th>
-                                            <th>Danh mục cha</th>
+                                            <th>ID</th>                                        
+                                            <th>Danh mục chính</th>
+                                            <th>Danh mục phụ</th>   
+                                            <th>Danh mục shop</th>                                         
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($subcategories as $subcategory)
+                                        @forelse($categories as $category)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $subcategory->data()['name'] }}</td>
-                                                <td>
-                                                    <span class="badge badge-info">
-                                                        {{ $Cate->data()['name'] }}
-                                                    </span>
-                                                </td>
+                                                @php
+                                                    $parent_category = app('firebase.firestore')->database()->collection('category')->document($category->data()['idCategory']);
+                                                    $subcategory = $parent_category->collection('subcategory')->document($category->data()['idSubCategory']);
+                                                    // $subcategory = app('firebase.firestore')->database()->collectionGroup('subcategory')->where('id', '=', $category->data()['idSubCategory'])->limit(1)->documents();
+                                                @endphp
+                                                <td>{{ $parent_category->snapshot()->data()['name'] }}</td>
+                                                <td>{{ $subcategory->snapshot()->data()['name'] }}</td>
+                                                <td>{{ $category->data()['name'] }}</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        <a href="{{ route('admin.subcategories.edit', ['category' =>$Cate->id(), 'subcategory'=>$subcategory->id()]) }}"
+                                                        <a href="{{ route('seller.categories.edit', $category->id()) }}"
                                                             class="btn btn-sm btn-primary mr-4">
                                                             <i class="fa fa-edit">{{ __('Sửa') }}</i>
                                                         </a>
                                                         <form onclick="return confirm('Chắc chắn xóa ?')"
-                                                            action="{{ route('admin.subcategories.destroy', ['category' =>$Cate->id(), 'subcategory'=>$subcategory->id()]) }}"
+                                                            action="{{ route('seller.categories.destroy', $category->id()) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

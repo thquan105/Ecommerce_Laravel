@@ -17,46 +17,56 @@
               <div class="card-body">
                 <div class="table-responsive">
                     <table id="data-table" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>SKU</th>
-                        <th>Tipe</th>
-                        <th>Nama Produk</th>
-                        <th>Harga</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
+                      <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Danh mục</th>
+                            <th>Ảnh</th>
+                            <th>Thao tác</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse($products as $product)
+                        @forelse($products as $product)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $product->sku }}</td>
-                                <td>{{ $product->type }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ number_format($product->price) }}</td>
-                                <td>{{ $product->statusLabel() }}</td>
+                                <td>{{ $product->data()['name'] }}</td>
                                 <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('seller.products.edit', $product) }}" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <form onclick="return confirm('are you sure !')" action="{{ route('seller.products.destroy', $product) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                </div>
+                                    @if (isset($product->data()['photo']))
+                                        <a href="{{ $product->data()['photo'] }}" target="_blank">
+                                            <img src="{{ $product->data()['photo'] }}" width="45px"
+                                                height="45px" alt="">
+                                        </a>
+                                    @else
+                                        <span class="badge badge-warning">No image</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('admin.subcategories.index', $product->id()) }}"
+                                            class="btn btn-sm btn-success mr-4">
+                                            <i class="fa fa-eye">{{ __(' Xem Subcategory') }}</i>
+                                        </a>
+                                        <a href="{{ route('admin.categories.edit', $product->id()) }}"
+                                            class="btn btn-sm btn-primary mr-4">
+                                            <i class="fa fa-edit">{{ __(' Sửa') }}</i>
+                                        </a>
+                                        <form onclick="return confirm('Chắc chắn xóa ?')"
+                                            action="{{ route('admin.categories.destroy', $product->id()) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger" type="submit"><i
+                                                    class="fa fa-trash">{{ __(' Xóa') }}</i></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">Dữ liệu rỗng !</td>
+                                <td colspan="4" class="text-center">Trống !</td>
                             </tr>
-                        @endforelse --}}
-                        </tbody>
+                        @endforelse
+                    </tbody>
                     </table>
                 </div>
               </div>

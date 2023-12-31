@@ -13,9 +13,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::all();
-
-        return view ('seller.products.index');/**, compact('products'));*/
+        $products = app('firebase.firestore')->database()->collection('product')
+        ->where('idShop', '=', session()->get('uid'))
+        ->documents();
+        
+        return view ('seller.products.index', compact('products'));
     }
 
     /**
