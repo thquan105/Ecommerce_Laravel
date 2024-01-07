@@ -19,9 +19,7 @@
                                 <table id="data-table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>                                        
-                                            <th>Danh mục chính</th>
-                                            <th>Danh mục phụ</th>   
+                                            <th>ID</th>
                                             <th>Danh mục shop</th>                                         
                                             <th>Thao tác</th>
                                         </tr>
@@ -30,18 +28,11 @@
                                         @forelse($categories as $category)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                @php
-                                                    $parent_category = app('firebase.firestore')->database()->collection('category')->document($category->data()['idCategory']);
-                                                    $subcategory = $parent_category->collection('subcategory')->document($category->data()['idSubCategory']);
-                                                    // $subcategory = app('firebase.firestore')->database()->collectionGroup('subcategory')->where('id', '=', $category->data()['idSubCategory'])->limit(1)->documents();
-                                                @endphp
-                                                <td>{{ $parent_category->snapshot()->data()['name'] }}</td>
-                                                <td>{{ $subcategory->snapshot()->data()['name'] }}</td>
                                                 <td>{{ $category->data()['name'] }}</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
                                                         <a href="{{ route('seller.categories.edit', $category->id()) }}"
-                                                            class="btn btn-sm btn-primary mr-4">
+                                                            class="btn btn-sm btn-primary mr-2">
                                                             <i class="fa fa-edit">{{ __('Sửa') }}</i>
                                                         </a>
                                                         <form onclick="return confirm('Chắc chắn xóa ?')"
@@ -57,7 +48,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="text-center">Trống !</td>
+                                                <td colspan="3" class="text-center">Trống !</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
