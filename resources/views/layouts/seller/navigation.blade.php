@@ -10,8 +10,7 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-            data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 <a href="{{ route('seller.dashboard') }}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
@@ -23,20 +22,20 @@
 
             {{-- <li class="nav-item">
                 <a href="{{ route('admin.users.index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        {{ __('Users') }}
-                    </p>
-                </a>
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+                {{ __('Users') }}
+            </p>
+            </a>
             </li> --}}
 
             {{-- <li class="nav-item">
                 <a href="{{ route('admin.slides.index') }}" class="nav-link">
-                    <i class="nav-icon fa fa-image"></i>
-                    <p>
-                        {{ __('Slide') }}
-                    </p>
-                </a>
+            <i class="nav-icon fa fa-image"></i>
+            <p>
+                {{ __('Slide') }}
+            </p>
+            </a>
             </li> --}}
 
             <li class="nav-item">

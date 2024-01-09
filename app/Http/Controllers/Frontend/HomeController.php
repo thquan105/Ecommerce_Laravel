@@ -13,29 +13,32 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  // public function __construct()
-  // {
-  //   $this->middleware('auth');
-  // }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //   $this->middleware('auth');
+    // }
 
-  /**
-   * Show the application dashboard.
-   *
-   * @return \Illuminate\Contracts\Support\Renderable
-   */
-  public function index(Request $request)
-  {
-    // FirebaseAuth.getInstance().getCurrentUser();
-    $products = app('firebase.firestore')->database()->collection('product')->documents();
-    if (session()->has('uid')) {
-      $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
-      return view('frontend.home', compact('user', 'products'));
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index(Request $request)
+    {
+        // FirebaseAuth.getInstance().getCurrentUser();
+        $products = app('firebase.firestore')->database()->collection('product')->documents();
+        $categories = app('firebase.firestore')->database()->collection('category')->documents();
+
+
+        if (session()->has('uid')) {
+            $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
+            return view('frontend.home', compact('user', 'products', 'categories'));
+        }
+        return view('frontend.home', compact('products', 'categories'));
     }
-    return view('frontend.home', compact('products'));
-  }
 }
