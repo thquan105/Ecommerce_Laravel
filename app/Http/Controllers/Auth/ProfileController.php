@@ -226,15 +226,16 @@ class ProfileController extends Controller
   {
     $updatedUser = app('firebase.auth')->deleteUser($id);
     $userRef = app('firebase.firestore')->database()->collection('user')->document($id);
+    if (isset($userRef->snapshot()->data()['photo'])) {
+      $URLphoto = $userRef->snapshot()->data()['photo'];
 
-    $URLphoto = $userRef->snapshot()->data()['photo'];
+      $path = parse_url($URLphoto, PHP_URL_PATH);
+      $filedel = basename($path);
 
-    $path = parse_url($URLphoto, PHP_URL_PATH);
-    $filedel = basename($path);
-
-    $imageDeleted = app('firebase.storage')->getBucket()->object("userImg/" . $filedel);
-    if ($imageDeleted->exists()) {
-      $imageDeleted->delete();
+      $imageDeleted = app('firebase.storage')->getBucket()->object("userImg/" . $filedel);
+      if ($imageDeleted->exists()) {
+        $imageDeleted->delete();
+      }
     }
 
     $userRef->delete();
