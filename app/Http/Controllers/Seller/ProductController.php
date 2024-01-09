@@ -15,7 +15,8 @@ class ProductController extends Controller
     {
         // $products = Product::all();
 
-        return view ('seller.products.index');/**, compact('products'));*/
+        return view('seller.products.index');
+        /**, compact('products'));*/
     }
 
     /**
@@ -26,8 +27,9 @@ class ProductController extends Controller
         // $categories = Category::orderBy('name', 'ASC')->get(['name','id']);
         // $types = Product::types();
         // $configurable_attributes = $this->_getConfigurableAttributes();
-        
-        return view('seller.products.create');/**, compact('categories', 'types', 'configurable_attributes'));*/
+
+        return view('seller.products.create');
+        /**, compact('categories', 'types', 'configurable_attributes'));*/
     }
 
     /**

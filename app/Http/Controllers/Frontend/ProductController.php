@@ -23,6 +23,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function index()
+    {
+        // FirebaseAuth.getInstance().getCurrentUser();
+        $products = app('firebase.firestore')->database()->collection('product')->documents();
+
+        $categories = app('firebase.firestore')->database()->collection('category')->documents();
+
+        return view('frontend.products.index', compact('products', 'categories'));
+    }
+
     public function productDetails(Request $request)
     {
         $idproduct = $request->route('id');

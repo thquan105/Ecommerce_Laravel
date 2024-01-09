@@ -1,7 +1,7 @@
 @php
-    if (session()->has('uid')) {
-        $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
-    }
+if (session()->has('uid')) {
+$user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
+}
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -15,11 +15,9 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('frontend/fonts/iconic/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/iconic/css/material-design-iconic-font.min.css') }}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/linearicons-v1.0.0/icon-font.min.css') }}">
     <!--===============================================================================================-->
@@ -66,21 +64,18 @@
                             USD
                         </a>
                         @if (session()->has('uid'))
-                            <a href="{{ route('profile.index') }}"
-                                class="flex-c-m trans-04 p-lr-25">{{ $user->data()['name'] }}</a>
-                            <a href="#" class="flex-c-m trans-04 p-lr-25"
-                                onclick="event.preventDefault();
+                        <a href="{{ route('profile.index') }}" class="flex-c-m trans-04 p-lr-25">{{ $user->data()['name'] }}</a>
+                        <a href="#" class="flex-c-m trans-04 p-lr-25" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                            {{ __('Logout') }}
+                        </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                         @else
-                            <a href="{{ url('login') }}" class="flex-c-m trans-04 p-lr-25">Login</a>
-                            <a href="{{ url('register') }}" class="flex-c-m trans-04 p-lr-25">Register</a>
+                        <a href="{{ url('login') }}" class="flex-c-m trans-04 p-lr-25">Login</a>
+                        <a href="{{ url('register') }}" class="flex-c-m trans-04 p-lr-25">Register</a>
                         @endif
                     </div>
                 </div>
@@ -106,7 +101,7 @@
                                 </ul> --}}
                             </li>
 
-                            <li class="label1 {{ Route::is('products.index') ? 'active-menu' : '' }}" data-label1="hot">
+                            <li class="label1 {{ Route::is('products') ? 'active-menu' : '' }}" data-label1="hot">
                                 <a href="{{ route('products.index') }}">Shop</a>
                             </li>
 
@@ -121,29 +116,26 @@
                             <li class="{{ Route::is('contact') ? 'active-menu' : '' }}">
                                 <a href="{{ route('contact') }}">Contact</a>
                             </li>
-                            
+
                             @if (session()->has('uid') && $user->data()['seller'] == true)
-                                <li class="label1" data-label1="Seller">
-                                    <a href="{{ route('seller.dashboard') }}">Seller</a>
-                                </li>
+                            <li class="label1" data-label1="Seller">
+                                <a href="{{ route('seller.dashboard') }}">Seller</a>
+                            </li>
                             @endif
                         </ul>
                     </div>
 
                     <!-- Icon header -->
                     <div class="wrap-icon-header flex-w flex-r-m">
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                        <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                             <i class="zmdi zmdi-search"></i>
-                        </div>
+                        </a>
 
-                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                            data-notify="2">
+                        <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
                             <i class="zmdi zmdi-shopping-cart"></i>
-                        </div>
+                        </a>
 
-                        <a href="{{ route('wishlists.index') }}"
-                            class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                            data-notify="0">
+                        <a href="{{ route('wishlists.index') }}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
                     </div>
@@ -155,24 +147,20 @@
         <div class="wrap-header-mobile">
             <!-- Logo moblie -->
             <div class="logo-mobile">
-                <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/icons/logo-01.png') }}"
-                        alt="IMG-LOGO"></a>
+                <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/icons/logo-01.png') }}" alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
             <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+                <a class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
                     <i class="zmdi zmdi-search"></i>
-                </div>
+                </a>
 
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-                    data-notify="2">
+                <a class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="2">
                     <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
+                </a>
 
-                <a href="{{ route('wishlists.index') }}"
-                    class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-                    data-notify="0">
+                <a href="{{ route('wishlists.index') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
             </div>
@@ -205,20 +193,17 @@
                             USD
                         </a>
                         @if (session()->has('uid'))
-                            <a href="{{ route('profile.index') }}"
-                                class="flex-c-m p-lr-10 trans-04">{{ $user->data()['name'] }}</a>
-                            <a href="#" class="flex-c-m p-lr-10 trans-04"
-                                onclick="event.preventDefault();
+                        <a href="{{ route('profile.index') }}" class="flex-c-m p-lr-10 trans-04">{{ $user->data()['name'] }}</a>
+                        <a href="#" class="flex-c-m p-lr-10 trans-04" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                         @else
-                            <a href="{{ url('login') }}" class="flex-c-m p-lr-10 trans-04">Login</a>
-                            <a href="{{ url('register') }}" class="flex-c-m p-lr-10 trans-04">Register</a>
+                        <a href="{{ url('login') }}" class="flex-c-m p-lr-10 trans-04">Login</a>
+                        <a href="{{ url('register') }}" class="flex-c-m p-lr-10 trans-04">Register</a>
                         @endif
                     </div>
                 </li>
@@ -381,8 +366,7 @@
 
                     <form>
                         <div class="wrap-input1 w-full p-b-4">
-                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
-                                placeholder="email@example.com">
+                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
                             <div class="focus-input1 trans-04"></div>
                         </div>
 
@@ -423,8 +407,7 @@
                     Copyright &copy;
                     <script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | Made with <i class="fa fa-heart-o"
-                        aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp;
+                    </script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp;
                     distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
