@@ -1,6 +1,10 @@
 @php
     if (session()->has('uid')) {
-        $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
+        $user = app('firebase.firestore')
+            ->database()
+            ->collection('user')
+            ->document(session()->get('uid'))
+            ->snapshot();
     }
 @endphp
 <!DOCTYPE html>
@@ -23,6 +27,9 @@
     <link rel="stylesheet" href="{{ asset('css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
     @stack('style-alt')
 </head>
 
@@ -59,8 +66,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="brand-link">
-                <img src="{{ asset('images/Logo-admin.png') }}" alt="SELLER Shop"
-                    class="brand-image">
+                <img src="{{ asset('images/Logo-admin.png') }}" alt="SELLER Shop" class="brand-image">
                 <span class="brand-text font-weight-light">SELLER</span>
             </a>
 
@@ -130,8 +136,11 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- dropzonejs -->
+    <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('js/adminlte.js') }}"></script>
     <script>

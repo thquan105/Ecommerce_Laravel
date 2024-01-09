@@ -65,7 +65,7 @@ Route::post('login/{provider}/callback', 'App\Http\Controllers\Auth\LoginControl
 Route::get('/product-detail/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'productDetails']);
 Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, 'verify_email'])->name('verify')->middleware('fireauth');
 Route::post('profile/add-email', [App\Http\Controllers\Auth\ProfileController::class, 'add_email'])->name('profile.email')->middleware('fireauth');
-Route::post('get-subcategories', [\App\Http\Controllers\Seller\CategoryController::class, 'subcategories']);
+Route::post('get-subcategories', [\App\Http\Controllers\Seller\ProductController::class, 'subcategories']);
 Route::group(['middleware' => ['fireauth' ,'user']], function () {
     // User login
     Route::resource('profile', App\Http\Controllers\Auth\ProfileController::class);
@@ -80,6 +80,7 @@ Route::group(['middleware' => ['fireauth' ,'user']], function () {
         Route::get('dashboard', [App\Http\Controllers\Seller\DashboardController::class, 'index'])->name('dashboard');
         Route::resource('products', \App\Http\Controllers\Seller\ProductController::class);
         Route::resource('categories', \App\Http\Controllers\Seller\CategoryController::class);
+        Route::post('products/images', [\App\Http\Controllers\Seller\ProductController::class, 'storeImage'])->name('products.storeImage');
         
     });
 });

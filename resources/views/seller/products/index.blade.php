@@ -34,17 +34,14 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 @php
-                                                    $productRef = app('firebase.firestore')
-                                                        ->database()
-                                                        ->collection('product')
-                                                        ->document($product->id());
+                                                    $firestore = app('firebase.firestore')->database();
+                                                    $productRef = $firestore->collection('product')->document($product->id());
                                                     $imgProduct = $productRef->collection('image')->documents();
-                                                    $category = app('firebase.firestore')
-                                                        ->database()
+                                                    $categoryShop = $firestore
                                                         ->collection('user')
                                                         ->document($product->data()['idShop'])
                                                         ->collection('categoryShop')
-                                                        ->document($product->data()['idSubCategory'])
+                                                        ->document($product->data()['idCategoryShop'])
                                                         ->snapshot();
                                                     $attributes = $productRef->collection('option')->documents();
                                                     $minPrice = PHP_INT_MAX;
@@ -59,6 +56,8 @@
                                                         }
                                                         $totalQuantity += $attribute->data()['quantity'];
                                                     }
+                                                    $category = $firestore->collection('category')->document($product->data()['idCategory']);
+                                                    $subcategory = $category->collection('subcategory')->document($product->data()['idSubCategory']);
                                                 @endphp
                                                 <td>
                                                     @if (isset($imgProduct))
@@ -72,23 +71,23 @@
                                                         <span class="badge badge-warning">No image</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $product->data()['name'] ?? 'none' }}</td>                                                
-                                                <td>{{ $category->data()['name'] ?? 'none' }}</td>
-                                                <td>{{ $category->data()['name'] ?? 'none' }}</td>
-                                                @if ($attributes->size() == 1) 
+                                                <td>{{ $product->data()['name'] ?? 'None' }}</td>
+                                                <td>{{ $subcategory->snapshot()->data()['name'] ?? 'None' }}</td>
+                                                <td>{{ $categoryShop->data()['name'] ?? 'None' }}</td>
+                                                @if ($attributes->size() == 1)
                                                     <td>{{ $minPrice }}</td>
                                                 @else
                                                     <td>{{ $minPrice }} - {{ $maxPrice }}</td>
-                                                @endif                                               
+                                                @endif
                                                 <td>{{ $totalQuantity }}</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        <a href="{{ route('admin.categories.edit', $product->id()) }}"
+                                                        <a href="{{ route('seller.products.edit', $product->id()) }}"
                                                             class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit">{{ __(' Sửa') }}</i>
                                                         </a>
                                                         <form onclick="return confirm('Chắc chắn xóa ?')"
-                                                            action="{{ route('admin.categories.destroy', $product->id()) }}"
+                                                            action="{{ route('seller.products.destroy', $product->id()) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
