@@ -878,24 +878,24 @@
         },
         {
             "name": "google/cloud-core",
-            "version": "v1.52.10",
+            "version": "v1.52.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-core.git",
-                "reference": "5e34556498ecadee2161402fd1024bec7ce33186"
+                "reference": "2e908c1fc3c2af048c77f8cb1f9de3281e31dddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/5e34556498ecadee2161402fd1024bec7ce33186",
-                "reference": "5e34556498ecadee2161402fd1024bec7ce33186",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/2e908c1fc3c2af048c77f8cb1f9de3281e31dddb",
+                "reference": "2e908c1fc3c2af048c77f8cb1f9de3281e31dddb",
                 "shasum": ""
             },
             "require": {
-                "google/auth": "^1.18",
+                "google/auth": "^1.34.0",
                 "guzzlehttp/guzzle": "^6.5.8|^7.4.4",
                 "guzzlehttp/promises": "^1.4||^2.0",
-                "guzzlehttp/psr7": "^1.7|^2.0",
-                "monolog/monolog": "^1.1|^2.0|^3.0",
+                "guzzlehttp/psr7": "^2.6",
+                "monolog/monolog": "^2.9|^3.0",
                 "php": ">=7.4",
                 "psr/http-message": "^1.0|^2.0",
                 "rize/uri-template": "~0.3"
@@ -903,7 +903,7 @@
             "require-dev": {
                 "erusev/parsedown": "^1.6",
                 "google/cloud-common-protos": "^0.4",
-                "google/gax": "^1.24.0",
+                "google/gax": "^1.26.0",
                 "opis/closure": "^3",
                 "phpdocumentor/reflection": "^5.0",
                 "phpspec/prophecy-phpunit": "^2.0",
@@ -937,28 +937,28 @@
             ],
             "description": "Google Cloud PHP shared dependency, providing functionality useful to all components.",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-core/tree/v1.52.10"
+                "source": "https://github.com/googleapis/google-cloud-php-core/tree/v1.52.11"
             },
-            "time": "2023-12-08T22:36:35+00:00"
+            "time": "2024-01-05T17:34:35+00:00"
         },
         {
             "name": "google/cloud-firestore",
-            "version": "v1.39.0",
+            "version": "v1.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-firestore.git",
-                "reference": "527717e603b01db57663c366a08771a7c35cee1c"
+                "reference": "e35f27d48433f27e6e66bcc80974a67bce185598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-firestore/zipball/527717e603b01db57663c366a08771a7c35cee1c",
-                "reference": "527717e603b01db57663c366a08771a7c35cee1c",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-firestore/zipball/e35f27d48433f27e6e66bcc80974a67bce185598",
+                "reference": "e35f27d48433f27e6e66bcc80974a67bce185598",
                 "shasum": ""
             },
             "require": {
                 "ext-grpc": "*",
                 "google/cloud-core": "^1.52.7",
-                "google/gax": "^1.24.0",
+                "google/gax": "^1.26.0",
                 "php": ">=7.4",
                 "ramsey/uuid": "^3.0|^4.0"
             },
@@ -993,22 +993,22 @@
             ],
             "description": "Cloud Firestore Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-firestore/tree/v1.39.0"
+                "source": "https://github.com/googleapis/google-cloud-php-firestore/tree/v1.40.0"
             },
-            "time": "2023-12-08T22:36:35+00:00"
+            "time": "2024-01-05T17:34:35+00:00"
         },
         {
             "name": "google/cloud-storage",
-            "version": "v1.36.0",
+            "version": "v1.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-storage.git",
-                "reference": "94215228fd03e548590134d1e521a34ec727460c"
+                "reference": "6b65c334b8b887cd771bb745ba0a5513ff9191b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-storage/zipball/94215228fd03e548590134d1e521a34ec727460c",
-                "reference": "94215228fd03e548590134d1e521a34ec727460c",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-storage/zipball/6b65c334b8b887cd771bb745ba0a5513ff9191b7",
+                "reference": "6b65c334b8b887cd771bb745ba0a5513ff9191b7",
                 "shasum": ""
             },
             "require": {
@@ -1049,9 +1049,9 @@
             ],
             "description": "Cloud Storage Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/google-cloud-php-storage/tree/v1.36.0"
+                "source": "https://github.com/googleapis/google-cloud-php-storage/tree/v1.36.1"
             },
-            "time": "2023-12-08T22:36:35+00:00"
+            "time": "2024-01-05T17:34:35+00:00"
         },
         {
             "name": "google/common-protos",
@@ -1107,23 +1107,23 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.26.0",
+            "version": "v1.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "7f3f9e7345b6b4da272e1a8d014c540fd0783481"
+                "reference": "b4e80d6974781f84532d651f61d10bbb92717fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/7f3f9e7345b6b4da272e1a8d014c540fd0783481",
-                "reference": "7f3f9e7345b6b4da272e1a8d014c540fd0783481",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/b4e80d6974781f84532d651f61d10bbb92717fe4",
+                "reference": "b4e80d6974781f84532d651f61d10bbb92717fe4",
                 "shasum": ""
             },
             "require": {
                 "google/auth": "^1.34.0",
                 "google/common-protos": "^3.0||^4.0",
                 "google/grpc-gcp": "^0.2||^0.3",
-                "google/longrunning": "^0.2",
+                "google/longrunning": "~0.2",
                 "google/protobuf": "^3.21.4",
                 "grpc/grpc": "^1.13",
                 "guzzlehttp/promises": "^1.4||^2.0",
@@ -1156,9 +1156,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.26.0"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.26.1"
             },
-            "time": "2024-01-03T21:38:43+00:00"
+            "time": "2024-01-04T19:17:21+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -1207,20 +1207,20 @@
         },
         {
             "name": "google/longrunning",
-            "version": "v0.2.6",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/php-longrunning.git",
-                "reference": "9689b4db54cf4cf8186118d9d59aa9ba35bb5842"
+                "reference": "c21cb8f8794f724ca672dad94bf7d406e62476b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/php-longrunning/zipball/9689b4db54cf4cf8186118d9d59aa9ba35bb5842",
-                "reference": "9689b4db54cf4cf8186118d9d59aa9ba35bb5842",
+                "url": "https://api.github.com/repos/googleapis/php-longrunning/zipball/c21cb8f8794f724ca672dad94bf7d406e62476b9",
+                "reference": "c21cb8f8794f724ca672dad94bf7d406e62476b9",
                 "shasum": ""
             },
             "require-dev": {
-                "google/gax": "^1.13.0",
+                "google/gax": "^1.26.0",
                 "phpunit/phpunit": "^9.0"
             },
             "type": "library",
@@ -1245,9 +1245,9 @@
             ],
             "description": "Google LongRunning Client for PHP",
             "support": {
-                "source": "https://github.com/googleapis/php-longrunning/tree/v0.2.6"
+                "source": "https://github.com/googleapis/php-longrunning/tree/v0.3.0"
             },
-            "time": "2023-04-21T14:12:59+00:00"
+            "time": "2024-01-05T17:46:51+00:00"
         },
         {
             "name": "google/protobuf",
@@ -2059,16 +2059,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.39.0",
+            "version": "v10.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "114926b07bfb5fbf2545c03aa2ce5c8c37be650c"
+                "reference": "7a9470071dac9579ebf29ad1b9d73e4b8eb586fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/114926b07bfb5fbf2545c03aa2ce5c8c37be650c",
-                "reference": "114926b07bfb5fbf2545c03aa2ce5c8c37be650c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7a9470071dac9579ebf29ad1b9d73e4b8eb586fc",
+                "reference": "7a9470071dac9579ebf29ad1b9d73e4b8eb586fc",
                 "shasum": ""
             },
             "require": {
@@ -2260,7 +2260,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-12-27T14:26:28+00:00"
+            "time": "2024-01-09T11:46:47+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -9790,5 +9790,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
