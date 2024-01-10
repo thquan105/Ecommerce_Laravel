@@ -23,13 +23,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         // FirebaseAuth.getInstance().getCurrentUser();
-        $products = app('firebase.firestore')->database()->collection('product')->documents();
+        $productRef = app('firebase.firestore')->database()->collection('product');
+        $products = $productRef->documents();
+
+        // $productsbyCategory = $productRef->where('idCategory', '=', $request->button('id'))->documents();
 
         $categories = app('firebase.firestore')->database()->collection('category')->documents();
-
         return view('frontend.products.index', compact('products', 'categories'));
     }
 
@@ -38,14 +40,15 @@ class ProductController extends Controller
         $idproduct = $request->route('id');
 
         $productRef = app('firebase.firestore')->database()->collection('product');
-        $productdatas = $productRef->document($idproduct)->snapshot()->data();
-        $idShop = $productdatas['idShop'];
+        $productdatas = $productRef->document($idproduct)->snapshot();
+        $idShop = $productdatas->data()['idShop'];
         $shop = app('firebase.firestore')->database()->collection('user')->document($idShop)->snapshot()->data();
 
         $imgProductRef = $productRef->document($idproduct)->collection('image');
         $optionProductRef = $productRef->document($idproduct)->collection('option');
         $images = $imgProductRef->documents();
         $options = $optionProductRef->documents();
+        // dd($options);
         return view('frontend.products.detail', compact('shop', 'productdatas', 'images', 'options'));
     }
 }

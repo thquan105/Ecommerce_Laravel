@@ -41,4 +41,9 @@ class HomeController extends Controller
         }
         return view('frontend.home', compact('products', 'categories'));
     }
+
+    public function CartProducts(Request $request)
+    {
+
+    }
 }
