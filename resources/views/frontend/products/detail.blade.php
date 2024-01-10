@@ -77,12 +77,6 @@
                             {{ $minPrice }} - {{ $maxPrice }} VNĐ
                         </span>
 
-                        <!-- <p class="stext-102 cl3 p-t-23">
-                                        Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare
-                                        feugiat.
-                                    </p> -->
-
-                        <!--  -->
                         <div class="p-t-33">
                             {{-- <div class="flex-w flex-r-m p-b-10">
                                 <div class="size-203 flex-c-m respon6">
