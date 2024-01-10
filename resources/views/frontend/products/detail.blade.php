@@ -59,18 +59,32 @@
 
                         </h5>
 
-                        <span class="mtext-106 cl2">
-                            {{ $productdatas['price'] }}
+                        @php
+                            $minPrice = PHP_INT_MAX;
+                            $maxPrice = 0;
+                            $totalQuantity = 0;
+                            foreach ($options as $option) {
+                                if ($minPrice >= $option->data()['price']) {
+                                    $minPrice = $option->data()['price'];
+                                }
+                                if ($maxPrice <= $option->data()['price']) {
+                                    $maxPrice = $option->data()['price'];
+                                }
+                                $totalQuantity += $option->data()['quantity'];
+                            }
+                        @endphp
+                        <span class="mtext-106 cl2" style="font-size: 25px">
+                            {{ $minPrice }} - {{ $maxPrice }} VNĐ
                         </span>
 
                         <!-- <p class="stext-102 cl3 p-t-23">
-                                    Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare
-                                    feugiat.
-                                </p> -->
+                                        Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare
+                                        feugiat.
+                                    </p> -->
 
                         <!--  -->
                         <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
+                            {{-- <div class="flex-w flex-r-m p-b-10">
                                 <div class="size-203 flex-c-m respon6">
                                     Size
                                 </div>
@@ -86,14 +100,44 @@
                                         <div class="dropDownSelect2"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="flex-w flex-r-m p-b-10">
                                 <div class="size-203 flex-c-m respon6">
-                                    Color
+                                    Option
                                 </div>
 
                                 <div class="size-204 respon6-next">
+                                    <ul>
+                                        @foreach ($options as $option)
+                                            <li>
+                                                <button class="btn btn-outline-primary mt-3" type="button"><img src="{{ $option->data()['image'] }}" alt="" style="width: 20px;">  {{ $option->data()['name'] }}</button>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+
+                                <div class="product-size">
+                                    <ul>
+                                        <li>
+                                            <button class="btn btn-outline-light" type="button">M</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-outline-light" type="button">L</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-outline-light" type="button">Xl</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
+
+
+
+                                {{-- <div class="size-204 respon6-next">
                                     <div class="rs1-select2 bor8 bg0">
                                         <select class="js-select2" name="time">
                                             <option>Red</option>
@@ -103,7 +147,7 @@
                                         </select>
                                         <div class="dropDownSelect2"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="flex-w flex-r-m p-b-10">
@@ -195,26 +239,12 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel">
                             <div class="how-pos2 p-lr-15-md">
                                 <p class="stext-102 cl6">
-                                    Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc
-                                    fringilla sit
-                                    amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit
-                                    lectus
-                                    interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim,
-                                    cursus et
-                                    elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in,
-                                    faucibus eu
-                                    velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci
-                                    nec
-                                    iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet
-                                    consequat,
-                                    purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed
-                                    metus
-                                    rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
+                                    {{ $productdatas['description'] }}
                                 </p>
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" id="information" role="tabpanel">
+                        {{-- <div class="tab-pane fade" id="information" role="tabpanel">
                             <div class="row">
                                 <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                     <ul class="p-lr-28 p-lr-15-sm">
@@ -270,7 +300,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
                             <div class="row">

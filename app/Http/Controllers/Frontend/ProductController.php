@@ -43,7 +43,9 @@ class ProductController extends Controller
         $shop = app('firebase.firestore')->database()->collection('user')->document($idShop)->snapshot()->data();
 
         $imgProductRef = $productRef->document($idproduct)->collection('image');
+        $optionProductRef = $productRef->document($idproduct)->collection('option');
         $images = $imgProductRef->documents();
-        return view('frontend.products.detail', compact('shop', 'productdatas', 'images'));
+        $options = $optionProductRef->documents();
+        return view('frontend.products.detail', compact('shop', 'productdatas', 'images', 'options'));
     }
 }

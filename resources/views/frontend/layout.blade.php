@@ -131,11 +131,11 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                             <i class="zmdi zmdi-search"></i>
                         </a>
 
-                        <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+                        <a href="{{ route('carts.index') }}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </a>
 
-                        <a href="{{ route('wishlists.index') }}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+                        <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
                     </div>
