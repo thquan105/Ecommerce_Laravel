@@ -70,6 +70,12 @@ Route::post('login/{provider}/callback', 'App\Http\Controllers\Auth\LoginControl
 Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, 'verify_email'])->name('verify')->middleware('fireauth');
 Route::post('profile/add-email', [App\Http\Controllers\Auth\ProfileController::class, 'add_email'])->name('profile.email')->middleware('fireauth');
 Route::post('get-subcategories', [\App\Http\Controllers\Seller\ProductController::class, 'subcategories']);
+Route::get('/shop/{id}', [App\Http\Controllers\Frontend\ShopController::class, 'shop_index'])->name('shop.index');
+Route::get('/shop/{id}/dm/{idCate}', [App\Http\Controllers\Frontend\ShopController::class, 'shop_category'])->name('shop.category');
+Route::get('/shop/{id}/asc', [App\Http\Controllers\Frontend\ShopController::class, 'product_asc'])->name('shop.product_asc');
+Route::get('/shop/{id}/desc', [App\Http\Controllers\Frontend\ShopController::class, 'product_desc'])->name('shop.product_desc');
+Route::get('/shop/{id}/filter', [App\Http\Controllers\Frontend\ShopController::class, 'product_filter'])->name('shop.product_filter');
+
 Route::group(['middleware' => ['fireauth', 'user']], function () {
     // User login
     Route::resource('profile', App\Http\Controllers\Auth\ProfileController::class);
@@ -100,4 +106,5 @@ Route::group(['middleware' => ['isAdmin', 'fireauth'], 'prefix' => 'admin', 'as'
     Route::get('sellers/approve', [App\Http\Controllers\Admin\SellerController::class, 'show'])->name('sellers.show');
     Route::get('sellers/{id}/deny', [App\Http\Controllers\Admin\SellerController::class, 'deny'])->name('sellers.deny');
     Route::get('sellers/{id}/accept', [App\Http\Controllers\Admin\SellerController::class, 'accept'])->name('sellers.accept');
+    Route::resource('ship', \App\Http\Controllers\Admin\ShipController::class);
 });

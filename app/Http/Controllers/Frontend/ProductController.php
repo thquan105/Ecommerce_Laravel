@@ -40,7 +40,7 @@ class ProductController extends Controller
         $productRef = app('firebase.firestore')->database()->collection('product');
         $productdatas = $productRef->document($idproduct)->snapshot()->data();
         $idShop = $productdatas['idShop'];
-        $shop = app('firebase.firestore')->database()->collection('user')->document($idShop)->snapshot()->data();
+        $shop = app('firebase.firestore')->database()->collection('user')->document($idShop)->snapshot();
 
         $imgProductRef = $productRef->document($idproduct)->collection('image');
         $images = $imgProductRef->documents();

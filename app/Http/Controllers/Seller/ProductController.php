@@ -59,6 +59,7 @@ class ProductController extends Controller
             'idCategory' => $request->parent_id,
             'idSubCategory' => $request->subparent_id,
             'description' => $request->description,
+            'atCreate' => now(),
         ]);
         // Add Images
         $localfolder = storage_path('tmp/uploads') . '/';

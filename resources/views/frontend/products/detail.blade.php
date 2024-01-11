@@ -164,8 +164,8 @@
                             src="{{ $shop['photo'] ?? asset('frontend/images/avatar-01.jpg') }}"
                             alt="Generic placeholder image" style="max-width:50px">
                         <div class="media-body">
-                            <h5 class="text-dark">Shop: {{ $shop['shopName'] ?? $shop['name'] }}</h5>
-                            <small class="text-muted">Shop Address: {{ $shop['address'] ?? '' }}</small>
+                            <a href="{{ route('shop.index', $shop->id()) }}"><h5 class="text-dark">Shop: {{ $shop->data()['shopName'] ?? $shop->data()['name'] }}</h5></a>
+                            <small class="text-muted">Shop Address: {{ $shop->data()['address'] ?? '' }}</small>
                         </div>
                     </div>
                 </div>
