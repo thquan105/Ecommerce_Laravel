@@ -20,7 +20,7 @@
 
 <!-- ?num-product1=1&num-product2=1&coupon=&time=USA&state=VN&postcode=123 -->
 <!-- Shoping Cart -->
-<form action="{{ route('carts.checkout') }}" method="" class="bg0 p-t-75 p-b-85">
+<form action="{{ route('carts.checkout') }}" method="GET" class="bg0 p-t-75 p-b-85">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -36,7 +36,9 @@
                                 <th class="column-5">Total</th>
                                 <th class="column-3">Remove</th>
                             </tr>
-
+                            @php
+                            $subtotal = 0;
+                            @endphp
                             @foreach($carts as $cart)
                             @php
 
@@ -66,7 +68,9 @@
                                     </div>
                                 </td>
                                 <td class="column-2">{{ $product->data()['name'] }}</td>
+                                <input type="hidden" name="idproduct[]" value="{{ $product->id() }}">
                                 <td class="column-2">{{ $option->data()['name'] }}</td>
+                                <input type="hidden" name="idoption[]" value="{{ $option->id() }}">
                                 <td class="column-3">{{ $option->data()['price'] }}</td>
                                 <td class="column-4">
                                     <div class="wrap-num-product flex-w m-l-auto m-r-0">
@@ -74,7 +78,7 @@
                                             <i class="fs-16 zmdi zmdi-minus"></i>
                                         </div>
 
-                                        <input class="mtext-104 cl3 txt-center num-product updateQty" type="number" id="productQty_{{ $cart->id() }}" onchange="updateQuantity(this)" data-rowid="{{ $cart->id() }}" name="num-product1" value="{{ $cart->data()['quantity'] }}">
+                                        <input class="mtext-104 cl3 txt-center num-product updateQty" type="number" id="productQty_{{ $cart->id() }}" onchange="updateQuantity(this)" data-rowid="{{ $cart->id() }}" name="num-product1[]" value="{{ $cart->data()['quantity'] }}">
 
                                         <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" onclick="updateQuantity(this)" data-rowid="{{ $cart->id() }}" data-act="up">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
@@ -84,6 +88,7 @@
 
                                 @php
                                 $total = $option->data()['price'] * $cart->data()['quantity'];
+                                $subtotal += $total;
                                 @endphp
                                 <td class="column-5">{{ $total }}</td>
                                 <td class="column-3 product-remove">
@@ -124,8 +129,8 @@
                         </div>
 
                         <div class="size-209">
-                            <span class="mtext-110 cl2">
-                                $79.65
+                            <span class="mtext-110 cl2" id="subtotal">
+                                {{$subtotal}} vnd
                             </span>
                         </div>
                     </div>
@@ -156,26 +161,29 @@
                                 @endphp
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
 
-                                    <select class="js-select2" name="time">
+                                    <select class="js-select2" name="idShippingUnit" id="shipselected">
                                         <option>Select a service...</option>
                                         @foreach($shipUnits as $shipUnit)
-                                        <option value="{{ $shipUnit->id() }}">{{ $shipUnit->data()['name'] }}</option>
+                                        <option value="{{ $shipUnit->id() }}">{{ $shipUnit->data()['name'] }}: {{$shipUnit->data()['price']}} vnd</option>
                                         @endforeach
                                     </select>
+
                                     <div class="dropDownSelect2"></div>
                                 </div>
-
+                                @foreach($shipUnits as $unit)
+                                <input type="hidden" value="{{ $unit->data()['price'] }}" id="{{$unit->id()}}">
+                                @endforeach
                                 <div class="flex-w">
-                                    <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
+                                    <button class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer" type="button" onclick="updatetotal()">
                                         Update Totals
-                                    </div>
+                                    </button>
                                 </div>
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex-w flex-t p-t-27 p-b-33">
+                    <div class=" flex-w flex-t p-t-27 p-b-33">
                         <div class="size-208">
                             <span class="mtext-101 cl2">
                                 Total:
@@ -183,10 +191,11 @@
                         </div>
 
                         <div class="size-209 p-t-1">
-                            <span class="mtext-110 cl2">
-                                $79.65
+                            <span id="pricetotal" class="mtext-110 cl2">
+                                Select a service...
                             </span>
                         </div>
+                        <input type="hidden" name="totalByShop" id="inputpricetotal" value="">
                     </div>
 
                     <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
@@ -219,6 +228,15 @@
         $('#rowId').val(rowId);
         $('#quantity').val(quantity);
         $('#updateCartQty').submit();
+    }
+
+    function updatetotal() {
+        var subtotal = parseInt(document.getElementById('subtotal').innerHTML);
+        var id = document.getElementById('shipselected').value;
+        var priceShip = parseInt(document.getElementById(id).value);
+        var total = subtotal + priceShip;
+        document.getElementById('pricetotal').innerHTML = total + ' vnd';
+        document.getElementById('inputpricetotal').value = total;
     }
 </script>
 @endpush
