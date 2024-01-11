@@ -75,9 +75,9 @@
                                                 <td>{{ $subcategory->snapshot()->data()['name'] ?? 'None' }}</td>
                                                 <td>{{ $categoryShop->data()['name'] ?? 'None' }}</td>
                                                 @if ($attributes->size() == 1)
-                                                    <td>{{ $minPrice }}</td>
+                                                    <td>{{ number_format($minPrice) }}</td>
                                                 @else
-                                                    <td>{{ $minPrice }} - {{ $maxPrice }}</td>
+                                                    <td>{{ number_format($minPrice) }} - {{ number_format($maxPrice) }} VND</td>
                                                 @endif
                                                 <td>{{ $totalQuantity }}</td>
                                                 <td>

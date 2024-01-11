@@ -91,7 +91,7 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
         Route::resource('products', \App\Http\Controllers\Seller\ProductController::class);
         Route::resource('categories', \App\Http\Controllers\Seller\CategoryController::class);
         Route::post('products/images', [\App\Http\Controllers\Seller\ProductController::class, 'storeImage'])->name('products.storeImage');
-        
+        Route::resource('orders', \App\Http\Controllers\Seller\OrderController::class)->only(['index','show','edit','update','destroy']);
     });
 });
 

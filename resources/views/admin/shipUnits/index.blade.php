@@ -31,7 +31,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $ship->data()['name'] }}</td>
-                                                <td>{{ $ship->data()['price'] }}</td>
+                                                <td>{{ number_format($ship->data()['price']) }} VNĐ</td>
                                                 <td>{{ $ship->data()['deliveryTime'] }} Ngày</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
