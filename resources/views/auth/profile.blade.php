@@ -235,6 +235,9 @@
                                     <button class="btn btn-success" type="button">Make Seller</button>
                                 </a>
                             @endif
+                            <a class="btn btn-link" href="{{ route('user.purchased') }}">
+                                <button class="btn btn-success" type="button">My Order</button>
+                            </a>
                         </form>
                         <form id="change-pass" action="{{ route('password.change') }}" method="POST">
                             @csrf

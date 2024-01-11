@@ -12,7 +12,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = app('firebase.firestore')->database()->collection('order')->documents();
+        $ordertRef = app('firebase.firestore')->database()->collection('order');
+        $orders = $ordertRef->where('idUser', '=', session()->get('uid'))->documents();
         return view('seller.orders.index', compact('orders'));
     }
 

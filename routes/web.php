@@ -85,6 +85,7 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
     Route::post('/carts/store', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('carts.store');
     Route::put('/carts/update', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('carts.update');
     Route::get('/carts/remove/{cartId}', [\App\Http\Controllers\Frontend\CartController::class, 'destroy']);
+    Route::get('/user/purchased', [\App\Http\Controllers\Frontend\ProductController::class, 'purchased'])->name('user.purchased'); 
 
     Route::get('carts/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('carts.checkout');
     Route::post('carts/checkout/post', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkout'])->name('carts.confirm.checkout');

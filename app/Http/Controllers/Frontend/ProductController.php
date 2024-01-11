@@ -51,4 +51,10 @@ class ProductController extends Controller
         // dd($options);
         return view('frontend.products.detail', compact('shop', 'productdatas', 'images', 'options'));
     }
+    public function purchased(){
+        $ordertRef = app('firebase.firestore')->database()->collection('order');
+        $orders = $ordertRef->where('idUser', '=', session()->get('uid'))->documents();
+
+        return view('frontend.products.purchased', compact('orders'));
+    }
 }

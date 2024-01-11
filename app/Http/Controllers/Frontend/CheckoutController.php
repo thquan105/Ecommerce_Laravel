@@ -45,9 +45,42 @@ class CheckoutController extends Controller
     }
     public function checkout(Request $request)
     {
+        $idproducts = $request->input('idproduct');
+        $idoptions = $request->input('idoption');
+        $idShippingUnit = $request->input('idship');
+        $totalByShop = $request->input('totalByShop');
+        $numprod = $request->input('numprod');
 
-        return redirect()->back()->with([
-            'message' => 'Thêm thành công !',
+        $orderRef = app('firebase.firestore')->database()->collection('order');
+        $prodRef = app('firebase.firestore')->database()->collection('product');
+        
+        foreach ($idproducts as $key => $idproduct) {
+            $prod = $prodRef->document($idproduct);
+            $option = $prod->collection('option')->document($idoptions[$key])->snapshot();
+            $order = $orderRef->add([
+                'idUser' => session()->get('uid'),
+                'idShippingUnit' => $idShippingUnit,
+                'totalByShop' => (int)$totalByShop,
+                'status' => 'đang chờ xử lý',
+                'atCreate' => now(),
+                'idShop' => $prod->snapshot()->data()['idShop'],
+            ]);
+            $orderDetailRef = app('firebase.firestore')->database()->collection('order')->document($order->id())->collection('option');
+
+            $orderDetailRef->add([
+                'idOption' => $idoptions[$key],
+                'idProduct' => $idproduct,
+                'quantity' => (int)$numprod[$key],
+                'price' => (int)$option->data()['price'],
+            ]);
+        }
+        $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'));
+        $cartRef = $user->collection('cart')->documents();
+        foreach ($cartRef as $cart) {
+            $cart->reference()->delete();
+        }
+        return redirect()->route('home')->with([
+            'message' => 'Đặt hàng thành công !',
             'alert-type' => 'success'
         ]);
     }
