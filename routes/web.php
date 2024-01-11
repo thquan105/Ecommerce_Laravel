@@ -63,17 +63,6 @@ Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])-
 Route::get('/product-detail/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'productDetails']);
 Route::get('/products', [App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('products.index');
 
-//cart
-Route::get('/carts', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('carts.index');
-Route::post('/carts/store', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('carts.store');
-Route::put('/carts/update', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('carts.update');
-Route::get('/carts/remove/{cartId}', [\App\Http\Controllers\Frontend\CartController::class, 'destroy']);
-
-Route::get('carts/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('carts.checkout');
-Route::post('carts/checkout/post', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkout'])->name('carts.confirm.checkout');
-
-
-
 
 Route::resource('/password/reset', App\Http\Controllers\Auth\ResetController::class);
 Route::post('login/{provider}/callback', 'App\Http\Controllers\Auth\LoginController@handleCallback');
@@ -92,6 +81,13 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
     Route::put('/home/iamseller', [App\Http\Controllers\Auth\ProfileController::class, 'makeSeller'])->name('profile.makeSeller');
     Route::post('password/change', [App\Http\Controllers\Auth\ProfileController::class, 'changePassword'])->name('password.change');
     Route::post('profile/{profile}', [App\Http\Controllers\Auth\ProfileController::class, 'updateImg'])->name('profile.updateImg');
+    Route::get('/carts', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('carts.index');
+    Route::post('/carts/store', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('carts.store');
+    Route::put('/carts/update', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('carts.update');
+    Route::get('/carts/remove/{cartId}', [\App\Http\Controllers\Frontend\CartController::class, 'destroy']);
+
+    Route::get('carts/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('carts.checkout');
+    Route::post('carts/checkout/post', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkout'])->name('carts.confirm.checkout');
 
 
 
@@ -101,7 +97,7 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
         Route::resource('products', \App\Http\Controllers\Seller\ProductController::class);
         Route::resource('categories', \App\Http\Controllers\Seller\CategoryController::class);
         Route::post('products/images', [\App\Http\Controllers\Seller\ProductController::class, 'storeImage'])->name('products.storeImage');
-        Route::resource('orders', \App\Http\Controllers\Seller\OrderController::class)->only(['index','show','edit','update','destroy']);
+        Route::resource('orders', \App\Http\Controllers\Seller\OrderController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
     });
 });
 

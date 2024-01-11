@@ -71,7 +71,7 @@
                                 <input type="hidden" name="idproduct[]" value="{{ $product->id() }}">
                                 <td class="column-2">{{ $option->data()['name'] }}</td>
                                 <input type="hidden" name="idoption[]" value="{{ $option->id() }}">
-                                <td class="column-3">{{ $option->data()['price'] }}</td>
+                                <td class="column-3">{{ number_format($option->data()['price']) }} VNĐ</td>
                                 <td class="column-4">
                                     <div class="wrap-num-product flex-w m-l-auto m-r-0">
                                         <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" onclick="updateQuantity(this)" data-rowid="{{ $cart->id() }}" data-act="down">
@@ -90,7 +90,7 @@
                                 $total = $option->data()['price'] * $cart->data()['quantity'];
                                 $subtotal += $total;
                                 @endphp
-                                <td class="column-5">{{ $total }}</td>
+                                <td class="column-5">{{ number_format($total) }} VNĐ</td>
                                 <td class="column-3 product-remove">
                                     <div class="remove">
                                         <a href="{{ url('carts/remove/' . $cart->id()) }}" class="btn btn-danger btn-sm">
@@ -130,8 +130,8 @@
 
                         <div class="size-209">
                             <span class="mtext-110 cl2" id="subtotal">
-                                {{$subtotal}} vnd
-                            </span>
+                                {{ $subtotal }}
+                            </span> VNĐ
                         </div>
                     </div>
 
@@ -235,7 +235,7 @@
         var id = document.getElementById('shipselected').value;
         var priceShip = parseInt(document.getElementById(id).value);
         var total = subtotal + priceShip;
-        document.getElementById('pricetotal').innerHTML = total + ' vnd';
+        document.getElementById('pricetotal').innerHTML = total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
         document.getElementById('inputpricetotal').value = total;
     }
 </script>

@@ -395,7 +395,7 @@
                             </a>
 
                             <span class="stext-105 cl3">
-                                {{ $product->data()['price'] }}
+                                {{ number_format($product->data()['price']) }} VNĐ
                             </span>
 
                             <!-- <span class="stext-105 cl3">
