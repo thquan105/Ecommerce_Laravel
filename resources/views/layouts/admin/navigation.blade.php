@@ -62,6 +62,14 @@
                     </li>    
                 </ul>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.ship.index') }}" class="nav-link">
+                    <i class="fa fa-truck nav-icon"></i>
+                    <p>
+                        {{ __('ShipUnit') }}
+                    </p>
+                </a>
+            </li>
 
         </ul>
     </nav>

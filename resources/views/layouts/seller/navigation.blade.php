@@ -4,7 +4,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
             {{-- {{ route('admin.profile.show') }} --}}
-            <a href="" class="d-block">Welcome, {{ $user->data()['name'] ?? ""}}</a>
+            <a href="" class="d-block">Welcome, {{ $user->data()['name'] ?? '' }}</a>
         </div>
     </div>
 
@@ -62,29 +62,12 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
+                <a href="" class="nav-link">
+                    <i class="nav-icon fa fa-image"></i>
                     <p>
-                        Quản lý đơn hàng
-                        <i class="fas fa-angle-left right"></i>
+                        {{ __('Quản lý đơn hàng') }}
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        {{-- {{ route('admin.orders.index') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Order</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.shipments.index') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Pengiriman</p>
-                        </a>
-                    </li>
-                </ul>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -100,20 +83,6 @@
                         <a href="" class="nav-link">
                             <i class="fa fa-plus nav-icon"></i>
                             <p>Keuntungan</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.product') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Produk</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ route('admin.reports.inventory') }} --}}
-                        <a href="" class="nav-link">
-                            <i class="fa fa-plus nav-icon"></i>
-                            <p>Inventory</p>
                         </a>
                     </li>
                     <li class="nav-item">
