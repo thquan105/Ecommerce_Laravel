@@ -22,13 +22,13 @@ Route::get('wishlists', function () {
 //     return view('frontend.products.index');
 // })->name('products.index');
 
-Route::get('carts', function () {
-    return view('frontend.carts.index');
-})->name('carts.index');
+// Route::get('carts', function () {
+//     return view('frontend.carts.index');
+// })->name('carts.index');
 
-Route::get('carts/checkout', function () {
-    return view('frontend.carts.checkout');
-})->name('carts.checkout');
+// Route::get('carts/checkout', function () {
+//     return view('frontend.carts.checkout');
+// })->name('carts.checkout');
 
 Route::get('about', function () {
     return view('frontend.other.about');
@@ -62,6 +62,16 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/product-detail/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'productDetails']);
 Route::get('/products', [App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('products.index');
+
+//cart
+Route::get('/carts', [App\Http\Controllers\Frontend\CartController::class, 'index'])->name('carts.index');
+Route::post('/carts/store', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('carts.store');
+Route::put('/carts/update', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('carts.update');
+Route::get('/carts/remove/{cartId}', [\App\Http\Controllers\Frontend\CartController::class, 'destroy']);
+
+Route::get('carts/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('carts.checkout');
+Route::post('carts/checkout/post', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkout'])->name('carts.confirm.checkout');
+
 
 
 
