@@ -52,7 +52,21 @@
                                                 </td>
                                                 <td>{{ $ship->data()['name'] }}</td>
                                                 <td>{{ $order->data()['atCreate'] }}</td>
-                                                <td>{{ $order->data()['status'] }}</td>
+                                                <td>
+                                                    @if ($order->data()['status'] == 'đang chờ xử lý')
+                                                        <span
+                                                            class="badge badge-info">Đang chờ xử lý</span>
+                                                    @elseIf($order->data()['status'] == 'đang vận chuyển')
+                                                        <span
+                                                            class="badge badge-success">Đang vận chuyển</span>
+                                                    @elseIf($order->data()['status'] == 'đã giao hàng')
+                                                        <span
+                                                            class="badge badge-primary">Đã giao hàng</span>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-danger">Đã hủy</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ number_format($order->data()['totalByShop']) }} VNĐ</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
@@ -60,18 +74,21 @@
                                                             class="btn btn-sm btn-primary">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <a href="{{ route('seller.orders.edit', $order->id()) }}"
-                                                            class="btn btn-sm btn-success">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <form onclick="return confirm('are you sure !')"
-                                                            action="{{ route('seller.orders.destroy', $order->id()) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-sm btn-danger" type="submit"><i
-                                                                    class="fa fa-trash"></i></button>
-                                                        </form>
+                                                        @if ($order->data()['status'] == 'đang chờ xử lý')
+                                                            <a href="{{ route('seller.orders.edit', $order->id()) }}"
+                                                                onclick="return confirm('Are you sure !')"
+                                                                class="btn btn-sm btn-success">
+                                                                <i class="fa fa-check"></i>
+                                                            </a>
+                                                            <form onclick="return confirm('Are you sure !')"
+                                                                action="{{ route('seller.orders.destroy', $order->id()) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-sm btn-danger" type="submit"><i
+                                                                        class="fa fa-window-close"></i></button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

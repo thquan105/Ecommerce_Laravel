@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index()
     {
         $ordertRef = app('firebase.firestore')->database()->collection('order');
-        $orders = $ordertRef->where('idUser', '=', session()->get('uid'))->documents();
+        $orders = $ordertRef->where('idShop', '=', session()->get('uid'))->documents();
         return view('seller.orders.index', compact('orders'));
     }
 
@@ -33,8 +33,14 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = app('firebase.firestore')->database()->collection('order')->document($id)->snapshot();
-        return view('seller.orders.edit', compact('order'));
+        $orderRef = app('firebase.firestore')->database()->collection('order')->document($id);
+        $orderRef->update([
+            ['path' => 'status', 'value' => 'đang vận chuyển'],
+        ]);
+        return redirect()->route('seller.orders.index')->with([
+            'message' => 'Đã nhận đơn !',
+            'alert-type' => 'success'
+        ]);
     }
 
     /**
@@ -42,14 +48,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $orderRef = app('firebase.firestore')->database()->collection('order')->document($id);
-        $orderRef->update([
-            ['path' => 'status', 'value' => $request->status],
-        ]);
-        return redirect()->route('seller.orders.index')->with([
-            'message' => 'Đã Thay đổi trạng thái !',
-            'alert-type' => 'success'
-        ]);
+        // $orderRef = app('firebase.firestore')->database()->collection('order')->document($id);
+        // $orderRef->update([
+        //     ['path' => 'status', 'value' => $request->status],
+        // ]);
+        // return redirect()->route('seller.orders.index')->with([
+        //     'message' => 'Đã Thay đổi trạng thái !',
+        //     'alert-type' => 'success'
+        // ]);
     }
 
     /**
@@ -57,6 +63,13 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $orderRef = app('firebase.firestore')->database()->collection('order')->document($id);
+        $orderRef->update([
+            ['path' => 'status', 'value' => 'đã hủy'],
+        ]);
+        return redirect()->route('seller.orders.index')->with([
+            'message' => 'Đã hủy đơn !',
+            'alert-type' => 'danger'
+        ]);
     }
 }
