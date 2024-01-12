@@ -25,6 +25,7 @@
                                             <th>Ngành hàng</th>
                                             <th>Danh mục</th>
                                             <th>Giá</th>
+                                            <th>Đã bán</th>
                                             <th>Kho hàng</th>
                                             <th>Thao tác</th>
                                         </tr>
@@ -79,6 +80,7 @@
                                                 @else
                                                     <td>{{ number_format($minPrice) }} - {{ number_format($maxPrice) }} VND</td>
                                                 @endif
+                                                <td>{{ $product->data()['sold'] ?? 0 }}</td>
                                                 <td>{{ $totalQuantity }}</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">

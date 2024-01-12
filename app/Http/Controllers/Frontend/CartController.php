@@ -45,15 +45,27 @@ class CartController extends Controller
     {
         $userRef = app('firebase.firestore')->database()->collection('user');
         $carts = $userRef->document(session()->get('uid'))->collection('cart');
-        $carts->add([
-            'optionProductId' => $request->input('idoption'),
-            'productId' => $request->input('idproduct'),
-            'quantity' => (int)$request->input('num-product'),
-        ]);
-        return redirect()->back()->with([
-            'message' => 'Thêm thành công !',
-            'alert-type' => 'success'
-        ]);
+
+        if ($carts
+            ->where('optionProductId', '=', $request->input('idoption'))
+            ->documents()->size() > 0
+        ) {
+            foreach ($carts
+                ->where('optionProductId', '=', $request->input('idoption'))
+                ->documents() as $cart) {
+                $carts->document($cart->id())->update([
+                    ['path' => 'quantity', 'value' => (int)$request->input('num-product') + $cart->data()['quantity']],
+                ]);
+            }
+        } else {
+            $carts->add([
+                'optionProductId' => $request->input('idoption'),
+                'productId' => $request->input('idproduct'),
+                'quantity' => (int)$request->input('num-product'),
+            ]);
+        }
+        return redirect()->back()->with('alert','Đã thêm vào giỏ hàng');
+        
     }
 
 

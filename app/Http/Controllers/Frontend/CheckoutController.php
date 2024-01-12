@@ -45,35 +45,49 @@ class CheckoutController extends Controller
     }
     public function checkout(Request $request)
     {
+        // dd($request->all());
         $idproducts = $request->input('idproduct');
+        $idshops = $request->input('idshop');
         $idoptions = $request->input('idoption');
         $idShippingUnit = $request->input('idship');
-        $totalByShop = $request->input('totalByShop');
         $numprod = $request->input('numprod');
 
         $orderRef = app('firebase.firestore')->database()->collection('order');
-        $prodRef = app('firebase.firestore')->database()->collection('product');
-        
-        foreach ($idproducts as $key => $idproduct) {
-            $prod = $prodRef->document($idproduct);
-            $option = $prod->collection('option')->document($idoptions[$key])->snapshot();
+        $prodRef = app('firebase.firestore')->database()->collection('product');  
+        $priceShip = app('firebase.firestore')->database()->collection('shippingUnit')->document($idShippingUnit)->snapshot()->data()['price']; 
+        foreach ($idshops as $idshop) {
             $order = $orderRef->add([
                 'idUser' => session()->get('uid'),
                 'idShippingUnit' => $idShippingUnit,
-                'totalByShop' => (int)$totalByShop,
                 'status' => 'đang chờ xử lý',
                 'atCreate' => now(),
-                'idShop' => $prod->snapshot()->data()['idShop'],
+                'idShop' => $idshop,
             ]);
-            $orderDetailRef = app('firebase.firestore')->database()->collection('order')->document($order->id())->collection('option');
-
-            $orderDetailRef->add([
-                'idOption' => $idoptions[$key],
-                'idProduct' => $idproduct,
-                'quantity' => (int)$numprod[$key],
-                'price' => (int)$option->data()['price'],
-            ]);
+            foreach ($idproducts as $key => $idproduct) {
+                $prod = $prodRef->document($idproduct);
+                $optionRef = $prod->collection('option')->document($idoptions[$key]);
+                $option = $optionRef->snapshot();
+                $orderDetailRef = $order->collection('option');
+                if ($idshop == $prod->snapshot()->data()['idShop']){
+                    $orderDetailRef->add([
+                        'idOption' => $idoptions[$key],
+                        'idProduct' => $idproduct,
+                        'quantity' => (int)$numprod[$key],
+                        'price' => (int)$option->data()['price'],
+                    ]);
+                    $prod->update([
+                        ['path' => 'sold', 'value' => (int)$prod->snapshot()->data()['sold'] + (int)$numprod[$key]],
+                    ]);
+                    $optionRef->update([
+                        ['path' => 'quantity', 'value' => (int)$option->data()['quantity'] - (int)$numprod[$key]],
+                    ]);
+                    $orderRef->document($order->id())->update([
+                        ['path' => 'totalByShop', 'value' => (int)$option->data()['price'] * (int)$numprod[$key] + (int)$priceShip],
+                    ]);
+                }       
+            }
         }
+
         $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'));
         $cartRef = $user->collection('cart')->documents();
         foreach ($cartRef as $cart) {
