@@ -64,6 +64,14 @@
                                                             class="btn btn-sm btn-success">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
+                                                        <form onclick="return confirm('are you sure !')"
+                                                            action="{{ route('seller.orders.destroy', $order->id()) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-danger" type="submit"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

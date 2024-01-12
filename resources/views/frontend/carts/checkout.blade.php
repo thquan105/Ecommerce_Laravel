@@ -78,6 +78,7 @@
                                 <div class="d-flex justify-content-between">
                                     <p>{{ $product->data()['name'] }}</p>
                                     <input type="hidden" name="idproduct[]" value="{{ $product->id() }}">
+                                    <input type="hidden" name="idshop[]" value="{{ $product->data()['idShop'] }}">
                                     @php
                                         $option = $optionRef->document($idoptions[$key])->snapshot();
                                     @endphp

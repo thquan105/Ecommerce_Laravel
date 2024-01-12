@@ -22,6 +22,10 @@
         </div>
     </div>
 
+    @if (session('alert'))
+        <section class='alert alert-success'>{{ session('alert') }}</section>
+    @endif
+
 
     <!-- Product Detail -->
     <section class="sec-product-detail bg0 p-t-65 p-b-60">
