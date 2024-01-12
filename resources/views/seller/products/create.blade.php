@@ -88,7 +88,7 @@
                                     <button type="button" class="btn btn-info btn-sm" onclick="addAttributeRow()">Thêm phân
                                         loại</button>
                                 </div>
-                                <div class="form-group row justify-content-center"> 
+                                <div class="form-group row justify-content-center">
                                     <button type="submit" class="btn btn-success btn-lg">Tạo sản phẩm</button>
                                 </div>
                             </form>
@@ -176,17 +176,6 @@
                 $('form').find('input[name="gallery[]"][value="' + name + '"]').remove()
             },
             init: function() {
-                @if (isset($product) && $product->gallery)
-                    var files =
-                        {!! json_encode($product->gallery) !!}
-                    for (var i in files) {
-                        var file = files[i]
-                        this.options.addedfile.call(this, file)
-                        this.options.thumbnail.call(this, file, file.original_url)
-                        file.previewElement.classList.add('dz-complete')
-                        $('form').append('<input type="hidden" name="gallery[]" value="' + file.file_name + '">')
-                    }
-                @endif
             },
             error: function(file, response) {
                 if ($.type(response) === 'string') {
@@ -224,7 +213,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="font-italic" for="attributeName">Tên phân loại</label>
-                    <input class="form-control" type="text" name="attributeName[]" required> 
+                    <input class="form-control" type="text" name="attributeName[]" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="font-italic" for="attributePrice">Giá</label>
@@ -234,7 +223,7 @@
                     <label class="font-italic" for="attributeQuantity">Số lượng</label>
                     <input type="number" class="form-control" name="attributeQuantity[]" required>
                 </div>
-            </div>       
+            </div>
             <button type="button" class="btn btn-danger btn-sm" onclick="removeAttributeRow(this)">Xóa phân loại</button>
             <hr width="100%" size="5px" align="center" color="black" />
         `;

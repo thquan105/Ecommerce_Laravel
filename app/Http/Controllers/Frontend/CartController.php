@@ -34,11 +34,6 @@ class CartController extends Controller
         $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
 
         $carts = $userRef->document(session()->get('uid'))->collection('cart')->documents();
-        // foreach ($carts as $cart) {
-        //     $productRef = app('firebase.firestore')->database()->collection('product');
-        //     $product = $productRef->document($cart->data()['productId'])->snapshot();
-        //     dd($product);
-        // }
         return view('frontend.carts.index', compact('user', 'carts'));
     }
     public function addToCart(Request $request)
