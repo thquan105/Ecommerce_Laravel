@@ -32,13 +32,13 @@
                             </tr>
 
                             @foreach ($orders as $order)
-                            @php
-                                $oderRef = app('firebase.firestore')
-                                    ->database()
-                                    ->collection('order')
-                                    ->document($order->id());
-                                $optionOrders = $oderRef->collection('option')->documents();
-                            @endphp
+                                @php
+                                    $oderRef = app('firebase.firestore')
+                                        ->database()
+                                        ->collection('order')
+                                        ->document($order->id());
+                                    $optionOrders = $oderRef->collection('option')->documents();
+                                @endphp
                                 <tr class="table_row">
                                     <td class="column-1">{{ $order->id() }}</td>
                                     <td class="column-2">
@@ -55,8 +55,8 @@
                                             @endphp
                                             <div class="flex-w flex-m m-b-30">
                                                 <div class="wrap-pic-w size-w-50 bo-all-1 bocl12 m-r-30">
-                                                    <img src="{{ $option->data()['image'] }}" width="75px"
-                                                    height="75px" alt="PRODUCT">
+                                                    <img src="{{ $option->data()['image'] }}" width="75px" height="75px"
+                                                        alt="PRODUCT">
                                                 </div>
 
                                                 <div class="size-w-75 flex-w flex-sb-m">
@@ -79,6 +79,12 @@
                                     <td class="column-5 text-success">{{ $order->data()['status'] }}</td>
                                 </tr>
                             @endforeach
+                            @if ($orders->isEmpty())
+                                <tr class="table_row">
+                                    <td colspan="5" class="text-center p-t-30 p-b-30">You have no order product
+                                    </td>
+                                </tr>
+                            @endif
                         </table>
                     </div>
                 </div>
