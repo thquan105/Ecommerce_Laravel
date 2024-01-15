@@ -93,6 +93,8 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
     Route::get('load-wishlist-count', [\App\Http\Controllers\Frontend\WishListController::class, 'wishlistCount']);  
     Route::get('load-cart-count', [\App\Http\Controllers\Frontend\CartController::class, 'cartCount']);  
 
+    Route::get('review', [\App\Http\Controllers\Frontend\ProductController::class, 'review'])->name('product.review');
+
 
     Route::group(['middleware' => ['isSeller'], 'prefix' => 'seller', 'as' => 'seller.'], function () {
         // Seller

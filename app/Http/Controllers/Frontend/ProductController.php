@@ -44,17 +44,37 @@ class ProductController extends Controller
         $idShop = $productdatas['idShop'];
         $shop = app('firebase.firestore')->database()->collection('user')->document($idShop)->snapshot();
 
+        $reviews = $productRef->document($idproduct)->collection('review')
+        ->orderBy('atCreate', 'desc')
+        ->documents();
+
         $imgProductRef = $productRef->document($idproduct)->collection('image');
         $optionProductRef = $productRef->document($idproduct)->collection('option');
         $images = $imgProductRef->documents();
         $options = $optionProductRef->documents();
         // dd($options);
-        return view('frontend.products.detail', compact('shop', 'productdatas', 'images', 'options'));
+        return view('frontend.products.detail', compact('shop', 'productdatas', 'images', 'options', 'reviews'));
     }
     public function purchased(){
         $ordertRef = app('firebase.firestore')->database()->collection('order');
         $orders = $ordertRef->where('idUser', '=', session()->get('uid'))->documents();
 
         return view('frontend.products.purchased', compact('orders'));
+    }
+
+    public function review(Request $request){
+        $request->validate([
+            'review' => 'required',
+            'rating' => 'required',
+        ]);
+        $productRef = app('firebase.firestore')->database()->collection('product')->document($request->input('idproduct'));
+        $reviewRef = $productRef->collection('review');
+        $reviewRef->add([
+            'idUser' => session()->get('uid'),
+            'content' => $request->review,
+            'rating' => (int)$request->rating,
+            'atCreate' => now(),
+        ]);
+        return redirect()->back()->with('alert','Đánh giá thành công !');
     }
 }
