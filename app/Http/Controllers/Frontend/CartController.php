@@ -90,14 +90,14 @@ class CartController extends Controller
         ]);
     }
 
-    public function wishlistCount()
+    public function cartCount()
     {
         $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'));
-        $wishlists = $user->collection('cart')
+        $carts = $user->collection('cart')
             ->documents();
-        $wishlistcount = $wishlists->size();
+        $cartcount = $carts->size();
         return response()->json([
-            'count' => $wishlistcount
+            'count' => $cartcount
         ]);
     }
 }
