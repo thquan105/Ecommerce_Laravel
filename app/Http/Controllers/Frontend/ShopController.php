@@ -21,7 +21,6 @@ class ShopController extends Controller
 
     public function shop_category($idShop, $idCate)
     {
-        dd($idCate);
         $shoper = app('firebase.firestore')->database()->collection('user')->document($idShop);
         $products = app('firebase.firestore')->database()->collection('product')
             ->where('idShop', '=', $idShop)

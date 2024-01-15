@@ -16,93 +16,99 @@
             </span>
         </div>
     </div>
-
+    @if (session()->has('message'))
+        <div class="container p-t-30">
+            <div class="mb-0 alert alert-{{ session()->get('alert-type') }} alert-dismissible fade show" role="alert">
+                <strong>{{ session()->get('message') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    @endif
 
     <!-- Wishlist -->
-    <form class="bg0 p-t-75 p-b-85">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-xl-12 m-lr-auto m-b-50">
-                    <div class="m-l-25 m-r--38 m-lr-0-xl">
-                        <div class="wrap-table-shopping-cart">
-                            <table class="table-shopping-cart">
+    <div class="container p-t-30">
+        <div class="row">
+            <div class="col-lg-10 col-xl-12 m-lr-auto m-b-50">
+                <div class="m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <thead>
                                 <tr class="table_head">
                                     <th class="column-1">Image</th>
                                     <th class="column-2">Name</th>
                                     <th class="column-3">Price</th>
-                                    <th class="column-1">Quantity</th>
-                                    <th class="column-5">Add to Cart</th>
-                                    <th class="column-1">Remove</th>
+                                    <th class="column-4">Detail</th>
+                                    <th class="column-5">Remove</th>
                                 </tr>
-
-                                <tr class="table_row">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="images/item-cart-04.jpg" alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2">Fresh Strawberries</td>
-                                    <td class="column-3">$ 36.00</td>
-                                    <td class="column-4">
-                                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                name="num-product1" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="column-5"><button>Add to Cart</button></td>
-                                    <td class="column-1">
-                                        <div class="remove">
-                                            <a href="" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i> Remove
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr class="table_row">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="images/item-cart-05.jpg" alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2">Lightweight Jacket</td>
-                                    <td class="column-3">$ 16.00</td>
-                                    <td class="column-4">
-                                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                name="num-product2" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="column-5"><button>Add to Cart</button></td>
-                                    <td class="column-1">
-                                        <div class="remove">
-                                            <a href="" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i> Remove
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                            </thead>
+                            <tbody>
+                                @if (isset($wishlists))
+                                    @foreach ($wishlists as $wishlist)
+                                        @php
+                                            $idproduct = $wishlist->data()['product_id'];
+                                            $productRef = app('firebase.firestore')
+                                                ->database()
+                                                ->collection('product');
+                                            $product = $productRef->document($idproduct)->snapshot();
+                                            $imgdocs = $productRef
+                                                ->document($idproduct)
+                                                ->collection('image')
+                                                ->limit(1)
+                                                ->documents();
+                                            if (!$imgdocs->isEmpty()) {
+                                                foreach ($imgdocs as $imgdoc) {
+                                                    $url = $imgdoc->data()['url'];
+                                                    break;
+                                                }
+                                            }
+                                        @endphp
+                                        <tr class="table_row">
+                                            <td class="column-1">
+                                                @if ($imgdocs->size() > 0)
+                                                    <img src="{{ $url }}" style="width:100px">
+                                                @else
+                                                    <span class="badge badge-danger">no image</span>
+                                                @endif
+                                            </td>
+                                            <td class="column-2">{{ $product->data()['name'] }}</td>
+                                            <td class="column-3"><span
+                                                    class="amount">{{ number_format($product->data()['price']) }}
+                                                    vnđ</span>
+                                            </td>
+                                            <td class="column-4">
+                                                <a href="{{ url('product-detail', $product->id()) }}"
+                                                    class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                                    Chi tiết
+                                                </a>
+                                            </td>
+                                            <td class="column-5">
+                                                <div class="remove">
+                                                    <form action="{{ route('wishlists.destroy', $wishlist->id()) }}"
+                                                        method="post" class="delete d-inline-block">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fa fa-trash"></i> Remove
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                @if (!isset($wishlists) || $wishlists->isEmpty())
+                                    <tr class="table_row">
+                                        <td colspan="5" class="text-center p-t-30 p-b-30">You have no wishlist product
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 @endsection

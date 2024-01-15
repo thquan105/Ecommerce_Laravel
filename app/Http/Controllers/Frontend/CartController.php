@@ -89,4 +89,15 @@ class CartController extends Controller
             'alert-type' => 'danger'
         ]);
     }
+
+    public function wishlistCount()
+    {
+        $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'));
+        $wishlists = $user->collection('cart')
+            ->documents();
+        $wishlistcount = $wishlists->size();
+        return response()->json([
+            'count' => $wishlistcount
+        ]);
+    }
 }
