@@ -89,4 +89,15 @@ class CartController extends Controller
             'alert-type' => 'danger'
         ]);
     }
+
+    public function cartCount()
+    {
+        $user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'));
+        $carts = $user->collection('cart')
+            ->documents();
+        $cartcount = $carts->size();
+        return response()->json([
+            'count' => $cartcount
+        ]);
+    }
 }

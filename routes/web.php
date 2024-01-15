@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('wishlists', function () {
-    return view('frontend.wishlists.index');
-})->name('wishlists.index');
+
 
 // Route::get('/product.html', function () {
 //     return view('frontend.products.index');
@@ -91,7 +89,11 @@ Route::group(['middleware' => ['fireauth', 'user']], function () {
 
     Route::get('carts/checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('carts.checkout');
     Route::post('carts/checkout/post', [App\Http\Controllers\Frontend\CheckoutController::class, 'checkout'])->name('carts.confirm.checkout');
+    Route::resource('wishlists', \App\Http\Controllers\Frontend\WishListController::class)->only(['index','store','destroy']);
+    Route::get('load-wishlist-count', [\App\Http\Controllers\Frontend\WishListController::class, 'wishlistCount']);  
+    Route::get('load-cart-count', [\App\Http\Controllers\Frontend\CartController::class, 'cartCount']);  
 
+    Route::get('review', [\App\Http\Controllers\Frontend\ProductController::class, 'review'])->name('product.review');
 
 
     Route::group(['middleware' => ['isSeller'], 'prefix' => 'seller', 'as' => 'seller.'], function () {

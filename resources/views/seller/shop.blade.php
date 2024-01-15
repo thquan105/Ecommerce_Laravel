@@ -65,7 +65,7 @@
 
                         <div class="p-t-55">
                             <h4 class="mtext-112 cl2 p-b-33">
-                                Categories
+                                Categories Shop
                             </h4>
 
                             <ul>
@@ -90,7 +90,8 @@
                             <h4 class="mtext-112 cl2 p-b-33">
                                 Price Products
                             </h4>
-                            <form action="{{ route('shop.product_filter', ['id'=>$shoper->snapshot()->id()]) }}" method="GET">
+                            <form action="{{ route('shop.product_filter', ['id' => $shoper->snapshot()->id()]) }}"
+                                method="GET">
                                 <label for="min_price">Min Price:</label>
                                 <div class="input-group mb-3">
                                     <input type="number" class="form-control" min="0" name="min_price"
@@ -138,14 +139,14 @@
                                         <ul>
 
                                             <li class="p-b-6">
-                                                <a href="{{ route('shop.product_asc', ['id'=>$shoper->snapshot()->id()]) }}"
+                                                <a href="{{ route('shop.product_asc', ['id' => $shoper->snapshot()->id()]) }}"
                                                     class="filter-link stext-106 trans-04">
                                                     Price: Low to High
                                                 </a>
                                             </li>
 
                                             <li class="p-b-6">
-                                                <a href="{{ route('shop.product_desc', ['id'=>$shoper->snapshot()->id()]) }}"
+                                                <a href="{{ route('shop.product_desc', ['id' => $shoper->snapshot()->id()]) }}"
                                                     class="filter-link stext-106 trans-04">
                                                     Price: High to Low
                                                 </a>
@@ -207,20 +208,46 @@
                                                 </span>
 
                                                 <!-- <span class="stext-105 cl3">
-                                                                            
-                                                                                                                    </span> -->
+                                                                                        
+                                                                                                                                </span> -->
                                             </div>
 
                                             <div class="block2-txt-child2 flex-r p-t-3">
-                                                <a href="#"
-                                                    class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                                    <img class="icon-heart1 dis-block trans-04"
-                                                        src="{{ asset('frontend/images/icons/icon-heart-01.png') }}"
-                                                        alt="ICON">
-                                                    <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                                        src="{{ asset('frontend/images/icons/icon-heart-02.png') }}"
-                                                        alt="ICON">
-                                                </a>
+                                                @php
+                                                    $check = false;
+                                                    if (session()->has('uid')) {
+                                                        $userRef = app('firebase.firestore')
+                                                            ->database()
+                                                            ->collection('user')
+                                                            ->document(session()->get('uid'));
+                                                        $wishlists = $userRef->collection('wishList')->documents();
+                                                        if (isset($wishlists)) {
+                                                            foreach ($wishlists as $wishlist) {
+                                                                if ($wishlist->data()['product_id'] == $product->id()) {
+                                                                    $check = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                @endphp
+                                                @if ($check)
+                                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative">
+                                                        <img class="dis-block trans-04"
+                                                            src="{{ asset('frontend/images/icons/icon-heart-02.png') }}"
+                                                            alt="ICON">
+                                                    @else
+                                                        <a href="#" product-slug="{{ $product->id() }}"
+                                                            class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+
+                                                            <img class="icon-heart1 dis-block trans-04"
+                                                                src="{{ asset('frontend/images/icons/icon-heart-01.png') }}"
+                                                                alt="ICON">
+                                                            <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                                                src="{{ asset('frontend/images/icons/icon-heart-02.png') }}"
+                                                                alt="ICON">
+                                                        </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

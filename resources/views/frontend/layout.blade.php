@@ -1,7 +1,11 @@
 @php
-if (session()->has('uid')) {
-$user = app('firebase.firestore')->database()->collection('user')->document(session()->get('uid'))->snapshot();
-}
+    if (session()->has('uid')) {
+        $user = app('firebase.firestore')
+            ->database()
+            ->collection('user')
+            ->document(session()->get('uid'))
+            ->snapshot();
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -10,14 +14,18 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
     <title>@yield('title') | Shop</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="{{ asset('frontend/images/icons/icon-favicon.png') }}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/iconic/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('frontend/fonts/iconic/css/material-design-iconic-font.min.css') }}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/linearicons-v1.0.0/icon-font.min.css') }}">
     <!--===============================================================================================-->
@@ -64,18 +72,21 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                             USD
                         </a>
                         @if (session()->has('uid'))
-                        <a href="{{ route('profile.index') }}" class="flex-c-m trans-04 p-lr-25">{{ $user->data()['name'] }}</a>
-                        <a href="#" class="flex-c-m trans-04 p-lr-25" onclick="event.preventDefault();
+                            <a href="{{ route('profile.index') }}"
+                                class="flex-c-m trans-04 p-lr-25">{{ $user->data()['name'] }}</a>
+                            <a href="#" class="flex-c-m trans-04 p-lr-25"
+                                onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+                                {{ __('Logout') }}
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                         @else
-                        <a href="{{ url('login') }}" class="flex-c-m trans-04 p-lr-25">Login</a>
-                        <a href="{{ url('register') }}" class="flex-c-m trans-04 p-lr-25">Register</a>
+                            <a href="{{ url('login') }}" class="flex-c-m trans-04 p-lr-25">Login</a>
+                            <a href="{{ url('register') }}" class="flex-c-m trans-04 p-lr-25">Register</a>
                         @endif
                     </div>
                 </div>
@@ -101,7 +112,7 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                                 </ul> --}}
                             </li>
 
-                            <li class="label1 {{ Route::is('products') ? 'active-menu' : '' }}" data-label1="hot">
+                            <li class="label1 {{ Route::is('products.index') ? 'active-menu' : '' }}" data-label1="hot">
                                 <a href="{{ route('products.index') }}">Shop</a>
                             </li>
 
@@ -118,9 +129,9 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                             </li>
 
                             @if (session()->has('uid') && $user->data()['seller'] == true)
-                            <li class="label1" data-label1="Seller">
-                                <a href="{{ route('seller.dashboard') }}">Seller</a>
-                            </li>
+                                <li class="label1" data-label1="Seller">
+                                    <a href="{{ route('seller.dashboard') }}">Seller</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -130,11 +141,15 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                         <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
                             <i class="zmdi zmdi-search"></i>
                         </a>
-                        <a href="{{ route('carts.index') }}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+                        <a href="{{ route('carts.index') }}"
+                            class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti cart-count"
+                            data-notify="0">
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </a>
 
-                        <a class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+                        <a href="{{ route('wishlists.index') }}"
+                            class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti wishlist-count"
+                            data-notify="0">
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
                     </div>
@@ -146,7 +161,8 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
         <div class="wrap-header-mobile">
             <!-- Logo moblie -->
             <div class="logo-mobile">
-                <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/icons/logo-01.png') }}" alt="IMG-LOGO"></a>
+                <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/icons/logo-01.png') }}"
+                        alt="IMG-LOGO"></a>
             </div>
 
             <!-- Icon header -->
@@ -155,11 +171,15 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                     <i class="zmdi zmdi-search"></i>
                 </a>
 
-                <a href="{{ route('carts.index') }}" class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="2">
+                <a href="{{ route('carts.index') }}"
+                    class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti cart-count"
+                    data-notify="0">
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </a>
 
-                <a href="{{ route('wishlists.index') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+                <a href="{{ route('wishlists.index') }}"
+                    class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti wishlist-count"
+                    data-notify="0">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
             </div>
@@ -192,17 +212,20 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                             USD
                         </a>
                         @if (session()->has('uid'))
-                        <a href="{{ route('profile.index') }}" class="flex-c-m p-lr-10 trans-04">{{ $user->data()['name'] }}</a>
-                        <a href="#" class="flex-c-m p-lr-10 trans-04" onclick="event.preventDefault();
+                            <a href="{{ route('profile.index') }}"
+                                class="flex-c-m p-lr-10 trans-04">{{ $user->data()['name'] }}</a>
+                            <a href="#" class="flex-c-m p-lr-10 trans-04"
+                                onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                         @else
-                        <a href="{{ url('login') }}" class="flex-c-m p-lr-10 trans-04">Login</a>
-                        <a href="{{ url('register') }}" class="flex-c-m p-lr-10 trans-04">Register</a>
+                            <a href="{{ url('login') }}" class="flex-c-m p-lr-10 trans-04">Login</a>
+                            <a href="{{ url('register') }}" class="flex-c-m p-lr-10 trans-04">Register</a>
                         @endif
                     </div>
                 </li>
@@ -247,9 +270,10 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
             <div class="container-search-header">
                 <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                    <img src="{{ asset('frontend/images/icons/icon-close2.png') }}" alt="CLOSE"> 
+                    <img src="{{ asset('frontend/images/icons/icon-close2.png') }}" alt="CLOSE">
                 </button>
-                <form action="{{route('products.search')}}" class="wrap-search-header flex-w p-l-15" method="GET">
+                <form action="{{ route('products.search') }}" class="wrap-search-header flex-w p-l-15"
+                    method="GET">
                     <button class="flex-c-m trans-04">
                         <i class="zmdi zmdi-search"></i>
                     </button>
@@ -364,7 +388,8 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
 
                     <form>
                         <div class="wrap-input1 w-full p-b-4">
-                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+                                placeholder="email@example.com">
                             <div class="focus-input1 trans-04"></div>
                         </div>
 
@@ -405,7 +430,8 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
                     Copyright &copy;
                     <script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp;
+                    </script> All rights reserved | Made with <i class="fa fa-heart-o"
+                        aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp;
                     distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
@@ -473,31 +499,6 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
     <!--===============================================================================================-->
     <script src="{{ asset('frontend/vendor/sweetalert/sweetalert.min.js') }}"></script>
     <script>
-        $('.js-addwish-b2').on('click', function(e) {
-            e.preventDefault();
-        });
-
-        $('.js-addwish-b2').each(function() {
-            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-            $(this).on('click', function() {
-                swal(nameProduct, "is added to wishlist !", "success");
-
-                $(this).addClass('js-addedwish-b2');
-                $(this).off('click');
-            });
-        });
-
-        $('.js-addwish-detail').each(function() {
-            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-            $(this).on('click', function() {
-                swal(nameProduct, "is added to wishlist !", "success");
-
-                $(this).addClass('js-addedwish-detail');
-                $(this).off('click');
-            });
-        });
-
         /*---------------------------------------------*/
 
         $('.js-addcart-detail').each(function() {
@@ -526,6 +527,7 @@ $user = app('firebase.firestore')->database()->collection('user')->document(sess
     </script>
     <!--===============================================================================================-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('frontend/js/custom.js') }}"></script>
 
 </body>
 
