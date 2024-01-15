@@ -202,11 +202,6 @@
                         </li>
 
                         <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional
-                                information</a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
                             <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
                         </li>
                     </ul>
@@ -253,7 +248,7 @@
                                             </div>
                                         </div>
 
-                                        <form class="w-full">
+                                        <form class="w-full" action="" method="GET">
                                             <h5 class="mtext-108 cl2 p-b-7">
                                                 Add a review
                                             </h5>
@@ -283,18 +278,6 @@
                                                     <label class="stext-102 cl3" for="review">Your
                                                         review</label>
                                                     <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
-                                                </div>
-
-                                                <div class="col-sm-6 p-b-5">
-                                                    <label class="stext-102 cl3" for="name">Name</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name"
-                                                        type="text" name="name">
-                                                </div>
-
-                                                <div class="col-sm-6 p-b-5">
-                                                    <label class="stext-102 cl3" for="email">Email</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email"
-                                                        type="text" name="email">
                                                 </div>
                                             </div>
 

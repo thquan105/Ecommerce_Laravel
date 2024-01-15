@@ -192,16 +192,18 @@
                                 <div class="block2-txt-child2 flex-r p-t-3">
                                     @php
                                         $check = false;
-                                        $userRef = app('firebase.firestore')
-                                            ->database()
-                                            ->collection('user')
-                                            ->document(session()->get('uid'));
-                                        $wishlists = $userRef->collection('wishList')->documents();
-                                        if (isset($wishlists)) {
-                                            foreach ($wishlists as $wishlist) {
-                                                if ($wishlist->data()['product_id'] == $product->id()) {
-                                                    $check = true;
-                                                    break;
+                                        if (session()->has('uid')) {
+                                            $userRef = app('firebase.firestore')
+                                                ->database()
+                                                ->collection('user')
+                                                ->document(session()->get('uid'));
+                                            $wishlists = $userRef->collection('wishList')->documents();
+                                            if (isset($wishlists)) {
+                                                foreach ($wishlists as $wishlist) {
+                                                    if ($wishlist->data()['product_id'] == $product->id()) {
+                                                        $check = true;
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
